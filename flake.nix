@@ -4,12 +4,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   };
 
-  outputs = 
+  outputs =
     inputs@{
       nixpkgs,
       self,
       ...
-    }: 
+    }:
     let
       arch = [
         "x86_64-linux"
