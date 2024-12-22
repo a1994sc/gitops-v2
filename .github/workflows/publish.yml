@@ -30,13 +30,13 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish Flux OCI artifact to GHCR
         run: |
-          flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ steps.git-env.outputs.REV }} \
+          flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }} \
             --path="./." \
             --source="${{ github.event.repository.html_url }}" \
             --revision="${GITHUB_REF_NAME}/${GITHUB_SHA}"
-          flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ steps.git-env.outputs.REV }} --tag latest
+          flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }} --tag latest
       - name: Sign artifacts with Cosign
         env:
           COSIGN_EXPERIMENTAL: 1
         run: |
-          cosign sign ghcr.io/a1994sc/gitops/core:${{ steps.git-env.outputs.REV }} --yes
+          cosign sign ghcr.io/a1994sc/gitops/core:${{ env.REV }} --yes
