@@ -1,0 +1,6 @@
+target/
+/home.nix
+.pre-commit-config.yaml
+.direnv/
+result
+result-man
