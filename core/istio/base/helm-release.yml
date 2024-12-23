@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: istio-base
+spec:
+  interval: 1m
+  chartRef:
+    kind: OCIRepository
+    name: chart-proxy-istio-base
+  valuesFrom:
+  - kind: ConfigMap
+    name: hr-values-istio-base
+    optional: false

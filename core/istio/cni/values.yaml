@@ -1,0 +1,41 @@
+---
+defaults:
+  cni:
+    image: install-cni
+    excludeNamespaces:
+    - kube-system
+    affinity: {}
+    podAnnotations: {}
+    provider: "default"
+    ambient:
+      enabled: true
+      configDir: ""
+      dnsCapture: false
+    repair:
+      enabled: true
+      labelPods: false
+      deletePods: false
+      repairPods: true
+      initContainerName: "istio-validation"
+      brokenPodLabelKey: "cni.istio.io/uninitialized"
+      brokenPodLabelValue: "true"
+    seccompProfile:
+      type: RuntimeDefault
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+    resourceQuotas:
+      enabled: false
+      pods: 5000
+    rollingMaxUnavailable: 3
+  global:
+    hub: docker.io/istio
+    variant: distroless
+    logging:
+      level: default:info,cni:info
+    logAsJson: false
+    defaultResources:
+      requests:
+        cpu: 100m
+        memory: 100Mi

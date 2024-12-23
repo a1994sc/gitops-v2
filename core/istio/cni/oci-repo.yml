@@ -1,0 +1,13 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: chart-proxy-istio-cni
+spec:
+  interval: 12h
+  layerSelector:
+    mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
+    operation: copy
+  url: oci://chartproxy.container-registry.com/istio-release.storage.googleapis.com/charts/cni
+  ref:
+    tag: 1.24.2
