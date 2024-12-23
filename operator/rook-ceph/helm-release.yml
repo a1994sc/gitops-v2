@@ -1,0 +1,15 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rook-ceph-operator
+  namespace: rook-ceph
+spec:
+  interval: 1m
+  chartRef:
+    kind: OCIRepository
+    name: chart-proxy-rook-ceph
+  valuesFrom:
+  - kind: ConfigMap
+    name: rook-ceph-operator-values
+    optional: false
