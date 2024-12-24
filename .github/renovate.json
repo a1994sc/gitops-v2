@@ -1,0 +1,83 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "assignees": [
+    "@A1994SC"
+  ],
+  "dependencyDashboard": true,
+  "flux": {
+    "fileMatch": [
+      "(^|/).+\\.ya?ml(\\.j2)?$"
+    ]
+  },
+  "helm-values": {
+    "fileMatch": [
+      "(^|/).+\\.ya?ml(\\.j2)?$"
+    ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+      "(^|/).+\\.ya?ml(\\.j2)?$"
+    ]
+  },
+  "packageRules": [
+    {
+      "description": [
+        "Flux Group"
+      ],
+      "groupName": "Flux",
+      "matchPackagePatterns": [
+        "flux"
+      ],
+      "matchDatasources": [
+        "docker",
+        "github-tags"
+      ],
+      "versioning": "semver",
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "matchDatasources": [
+        "docker",
+        "helm"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor",
+        "patch",
+        "bump"
+      ],
+      "commitMessagePrefix": "chore(oci-deps): "
+    },
+    {
+      "matchDatasources": [
+        "github-releases",
+        "github-tags"
+      ],
+      "separateMajorMinor": false,
+      "commitMessagePrefix": "chore(github): ",
+      "automerge": true
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": [
+        "Process custom dependencies"
+      ],
+      "fileMatch": [
+        "(^|/).+\\.ya?ml(\\.j2)?$"
+      ],
+      "matchStrings": [
+        "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+?: ?\"?.*(?<currentValue>\\S+?)\"?$)",
+        "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+?\/(?<currentValue>(v|\\d)[^\/]+)\\S+$)"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    }
+  ]
+}
