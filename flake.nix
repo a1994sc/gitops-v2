@@ -6,15 +6,15 @@
       url = "github:numtide/flake-utils";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    systems.url = "github:nix-systems/default";
-    treefmt-nix = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:numtide/treefmt-nix";
-    };
     pre-commit-hooks = {
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-stable.follows = "nixpkgs";
       url = "github:cachix/pre-commit-hooks.nix";
+    };
+    systems.url = "github:nix-systems/default";
+    treefmt-nix = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:numtide/treefmt-nix";
     };
     # keep-sorted end
   };
