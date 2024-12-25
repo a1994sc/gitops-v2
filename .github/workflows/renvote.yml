@@ -13,9 +13,6 @@ jobs:
     steps:
     - name: Clone repo
       uses: actions/checkout@v4.2.2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
-        fetch-depth: 0
     - name: Configure gitsign
       uses: chainguard-dev/actions/setup-gitsign@main
     - name: Update checksum
