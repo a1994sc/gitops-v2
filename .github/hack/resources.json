@@ -1,0 +1,15 @@
+{
+  "$schema": "./resources.schema.json",
+  "projects": [
+    {
+      "path": "core/gateway",
+      "repo": {
+        "url": "https://github.com/kubernetes-sigs/gateway-api",
+        "x-renovate": "datasource=github-releases depName=kubernetes-sigs/gateway-api",
+        "tag": "v1.1.1",
+        "path": "standard-install.yaml",
+        "release": true
+      }
+    }
+  ]
+}

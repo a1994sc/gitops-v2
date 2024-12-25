@@ -94,6 +94,9 @@
         };
         devShells.default = nixpkgs.legacyPackages.${system}.mkShell {
           shellHook = self.checks.${system}.pre-commit-check.shellHook;
+          buildInputs = with pkgs; [
+            gh
+          ];
         };
         formatter = treefmtEval.config.build.wrapper;
       }

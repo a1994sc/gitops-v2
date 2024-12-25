@@ -24,24 +24,6 @@
   },
   "packageRules": [
     {
-      "description": [
-        "Flux Group"
-      ],
-      "groupName": "Flux",
-      "matchPackagePatterns": [
-        "flux"
-      ],
-      "matchDatasources": [
-        "docker",
-        "github-tags"
-      ],
-      "versioning": "semver",
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
-      },
-      "separateMinorPatch": true
-    },
-    {
       "matchDatasources": [
         "docker",
         "helm"
@@ -53,29 +35,19 @@
         "bump"
       ],
       "commitMessagePrefix": "chore(oci-deps): "
-    },
-    {
-      "matchDatasources": [
-        "github-releases",
-        "github-tags"
-      ],
-      "separateMajorMinor": false,
-      "commitMessagePrefix": "chore(github): ",
-      "automerge": true
     }
   ],
   "customManagers": [
     {
       "customType": "regex",
       "description": [
-        "Process custom dependencies"
+        "Regex for resource.json hack"
       ],
       "fileMatch": [
-        "(^|/).+\\.ya?ml(\\.j2)?$"
+        "(^|/).github/hack/resources\\.json"
       ],
       "matchStrings": [
-        "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+?: ?\"?.*(?<currentValue>\\S+?)\"?$)",
-        "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+?\/(?<currentValue>(v|\\d)[^\/]+)\\S+$)"
+        "\"x-renovate\": \"datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\",\\n.+?: ?.*\"(?<currentValue>\\S+?)\""
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
     }
