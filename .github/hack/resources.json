@@ -6,7 +6,7 @@
       "repo": {
         "url": "https://github.com/kubernetes-sigs/gateway-api",
         "x-renovate": "datasource=github-releases depName=kubernetes-sigs/gateway-api",
-        "tag": "v1.1.1",
+        "tag": "v1.2.1",
         "path": "standard-install.yaml",
         "release": true
       }
