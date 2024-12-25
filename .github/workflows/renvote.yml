@@ -5,7 +5,8 @@ on:
     branches:
     - "renovate/**"
 permissions:
-  contents: write # for gitsign permission
+  contents: write
+  id-token: write # needed for keyless signing
 jobs:
   resources:
     runs-on: ubuntu-latest
