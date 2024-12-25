@@ -11,9 +11,6 @@ for resource in "${resourceMap[@]}"; do
 
   mkdir -p $path
 
-  echo "resource: $url"
-  echo "tag: $tag"
-
   if [ "$release" = "true" ]; then
     gh release download --repo $url --pattern $file --dir $path --clobber $tag
   else
