@@ -20,3 +20,5 @@ for resource in "${resourceMap[@]}"; do
     echo "TODO: gh file from repo"
   fi
 done
+
+git diff
