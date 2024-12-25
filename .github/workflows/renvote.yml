@@ -14,6 +14,9 @@ jobs:
     steps:
     - name: Clone repo
       uses: actions/checkout@v4.2.2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        fetch-depth: 0
     - name: Configure gitsign
       uses: chainguard-dev/actions/setup-gitsign@main
     - name: Update checksum
@@ -28,5 +31,5 @@ jobs:
           git config --global user.email "<29139614+renovate[bot]@users.noreply.github.com>"
           git config --global user.name "renovate[bot]"
           git commit -am "chore(resources): updated resources files"
-          git push origin HEAD:${{ github.head_ref }}
+          git push origin ${{ github.ref_name }}
         fi
