@@ -1,0 +1,31 @@
+---
+name: Populate Renovate resources
+on:
+  push:
+    branches:
+    - "renovate/**"
+permissions:
+  contents: write # for gitsign permission
+jobs:
+  resources:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'renovate[bot]' }}
+    steps:
+    - name: Clone repo
+      uses: actions/checkout@v4.2.2
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+        fetch-depth: 0
+    - name: Configure gitsign
+      uses: chainguard-dev/actions/setup-gitsign@main
+    - name: Update checksum
+      run: |
+        ./.github/hack/update.sh
+
+        # git push if we have a diff
+        if [[ -n $(git diff) ]]; then
+          git config --global user.email "<29139614+renovate[bot]@users.noreply.github.com>"
+          git config --global user.name "renovate[bot]"
+          git commit -am "chore(resources): updated resources files"
+          git push origin HEAD:${{ github.head_ref }}
+        fi
