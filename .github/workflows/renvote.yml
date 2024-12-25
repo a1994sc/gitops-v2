@@ -19,6 +19,8 @@ jobs:
     - name: Configure gitsign
       uses: chainguard-dev/actions/setup-gitsign@main
     - name: Update checksum
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         ./.github/hack/update.sh
 
