@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kyverno
+spec:
+  interval: 1m
+  chartRef:
+    kind: OCIRepository
+    name: ghcr-io-kyverno
+  valuesFrom:
+  - kind: ConfigMap
+    name: kyverno-values
+    optional: false
+  values:
+    admissionController:
+      initContainer:
+        resources:
+          limits:
+            cpu: null
+          requests:
+            cpu: null
+      container:
+        resources:
+          limits:
+            cpu: null
+          requests:
+            cpu: null
+    backgroundController:
+      resources:
+        limits:
+          cpu: null
+        requests:
+          cpu: null
+    reportsController:
+      resources:
+        limits:
+          cpu: null
+        requests:
+          cpu: null
+    cleanupController:
+      resources:
+        limits:
+          cpu: null
+        requests:
+          cpu: null
