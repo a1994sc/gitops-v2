@@ -1,0 +1,251 @@
+---
+config:
+  resourceFiltersExcludeNamespaces:
+  - rook-ceph
+metricsConfig:
+  metricsExposure:
+    kyverno_policy_execution_duration_seconds:
+      disabledLabelDimensions:
+      - "resource_kind"
+      - "resource_namespace"
+      - "resource_request_operation"
+      bucketBoundaries:
+      - 0.005
+      - 0.01
+      - 0.025
+    kyverno_admission_review_duration_seconds:
+      enabled: false
+grafana:
+  enabled: false
+  namespace: monitoring
+cleanupJobs:
+  admissionReports:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/kubectl
+      tag: "1.32.0"
+    securityContext:
+      runAsNonRoot: true
+      privileged: false
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsGroup: 65534
+      runAsUser: 65534
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+    tolerations:
+    - key: InfrastructureOnly
+      operator: Exists
+  clusterAdmissionReports:
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/kubectl
+      tag: "1.32.0"
+    securityContext:
+      runAsNonRoot: true
+      privileged: false
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsGroup: 65534
+      runAsUser: 65534
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+    tolerations:
+    - key: InfrastructureOnly
+      operator: Exists
+admissionController:
+  replicas: 3
+  podLabels: {}
+  # -- Change `apiPriorityAndFairness` to `true` if you want to insulate the API calls made by Kyverno admission controller activities.
+  # This will help ensure Kyverno stability in busy clusters.
+  # Ref: https://kubernetes.io/docs/concepts/cluster-administration/flow-control/
+  apiPriorityAndFairness: false
+  antiAffinity:
+    enabled: true
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 1
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/component
+            operator: In
+            values:
+            - admission-controller
+        topologyKey: kubernetes.io/hostname
+  initContainer:
+    image:
+      registry: ghcr.io
+      repository: kyverno/kyvernopre
+    resources:
+      limits:
+        memory: 256Mi
+      requests:
+        memory: 64Mi
+    securityContext:
+      runAsNonRoot: true
+      privileged: false
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsGroup: 65534
+      runAsUser: 65534
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+  container:
+    image:
+      registry: ghcr.io
+      repository: kyverno/kyverno
+    resources:
+      limits:
+        memory: 384Mi
+      requests:
+        memory: 128Mi
+    securityContext:
+      runAsNonRoot: true
+      privileged: false
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsGroup: 65534
+      runAsUser: 65534
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+  tolerations:
+  - key: CriticalOnly
+    operator: Exists
+  - key: InfrastructureOnly
+    operator: Exists
+  metricsService:
+    create: true
+  networkPolicy:
+    enabled: false
+  # serviceMonitor:
+  #   enabled: true
+  tracing:
+    enabled: false
+  metering:
+    disabled: true
+backgroundController:
+  image:
+    registry: ghcr.io
+    repository: kyverno/background-controller
+  replicas: 2
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      memory: 64Mi
+  securityContext:
+    runAsNonRoot: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsGroup: 65534
+    runAsUser: 65534
+    capabilities:
+      drop:
+      - ALL
+    seccompProfile:
+      type: RuntimeDefault
+  tolerations:
+  - key: CriticalOnly
+    operator: Exists
+  - key: InfrastructureOnly
+    operator: Exists
+  metricsService:
+    create: true
+  networkPolicy:
+    enabled: false
+  # serviceMonitor:
+  #   enabled: true
+  tracing:
+    enabled: false
+  metering:
+    disabled: true
+reportsController:
+  image:
+    registry: ghcr.io
+    repository: kyverno/reports-controller
+  replicas: 2
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      memory: 64Mi
+  securityContext:
+    runAsNonRoot: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsGroup: 65534
+    runAsUser: 65534
+    capabilities:
+      drop:
+      - ALL
+    seccompProfile:
+      type: RuntimeDefault
+  tolerations:
+  - key: CriticalOnly
+    operator: Exists
+  - key: InfrastructureOnly
+    operator: Exists
+  metricsService:
+    create: true
+  networkPolicy:
+    enabled: false
+  # serviceMonitor:
+  #   enabled: true
+  tracing:
+    enabled: false
+  metering:
+    disabled: true
+cleanupController:
+  image:
+    registry: ghcr.io
+    repository: kyverno/cleanup-controller
+  replicas: 2
+  tolerations:
+  - key: CriticalOnly
+    operator: Exists
+  - key: InfrastructureOnly
+    operator: Exists
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      memory: 64Mi
+  securityContext:
+    runAsNonRoot: true
+    privileged: false
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    runAsGroup: 65534
+    runAsUser: 65534
+    capabilities:
+      drop:
+      - ALL
+    seccompProfile:
+      type: RuntimeDefault
+  metricsService:
+    create: true
+  networkPolicy:
+    enabled: false
+  # serviceMonitor:
+  #   enabled: true
+  tracing:
+    enabled: false
+  metering:
+    disabled: true
