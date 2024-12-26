@@ -22,7 +22,7 @@ jobs:
     - name: Update checksum
       env:
         GH_TOKEN: ${{ github.token }}
-      run: |
+      run: |-
         ./.github/hack/update.sh
 
         # git push if we have a diff

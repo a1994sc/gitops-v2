@@ -75,7 +75,7 @@
         "Process custom dependencies"
       ],
       "fileMatch": [
-      "(^|/).+\\.ya?ml(\\.j2)?$"
+        "(^|/).+\\.ya?ml(\\.j2)?$"
       ],
       "matchStrings": [
         "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+?: ?\"?.*(?<currentValue>\\S+?)\"?$)",
