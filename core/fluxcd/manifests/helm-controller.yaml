@@ -3799,7 +3799,7 @@ spec:
             resourceFieldRef:
               containerName: manager
               resource: limits.memory
-        image: fluxcd/helm-controller:v1.1.0
+        image: fluxcd/helm-controller:v1.0.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
