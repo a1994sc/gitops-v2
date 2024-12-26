@@ -27,7 +27,7 @@
               "path": {
                 "type": "string"
               },
-              "x-renovate": {
+              "renovate": {
                 "type": "string",
                 "pattern": "^datasource=\\S+ depName=\\S+( repository=\\S+)?$"
               }
@@ -40,6 +40,14 @@
           },
           "path": {
             "type": "string"
+          },
+          "file": {
+            "type": "object",
+            "properties": {
+              "extract": {
+                "type": "boolean"
+              }
+            }
           }
         },
         "required": [

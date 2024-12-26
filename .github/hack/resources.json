@@ -5,9 +5,22 @@
       "path": "core/gateway",
       "repo": {
         "url": "https://github.com/kubernetes-sigs/gateway-api",
-        "x-renovate": "datasource=github-releases depName=kubernetes-sigs/gateway-api",
+        "renovate": "datasource=github-releases depName=kubernetes-sigs/gateway-api",
         "tag": "v1.2.1",
         "path": "standard-install.yaml",
+        "release": true
+      }
+    },
+    {
+      "path": "core/fluxcd/manifests",
+      "file": {
+        "extract": true
+      },
+      "repo": {
+        "url": "https://github.com/fluxcd/flux2",
+        "renovate": "datasource=github-releases depName=fluxcd/flux2",
+        "tag": "v2.3.0",
+        "path": "manifests.tar.gz",
         "release": true
       }
     }
