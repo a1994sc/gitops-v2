@@ -1,0 +1,45 @@
+---
+tolerations:
+- key: CriticalOnly
+  operator: "Exists"
+- key: InfrastructureOnly
+  operator: Exists
+replica: 2
+image:
+  # renovate: datasource=docker depName=ghcr.io/alex1989hu/kubelet-serving-cert-approver
+  tag: "0.8.7"
+metrics:
+  enabled: true
+serviceAccount:
+  automount: false
+resources:
+  limits:
+    cpu: null
+    memory: 32Mi
+  requests:
+    cpu: 10m
+    memory: 18Mi
+extraVolumes:
+  volumes:
+  - name: serviceaccount-token
+    projected:
+      defaultMode: 0444
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          name: kube-root-ca.crt
+          items:
+          - key: ca.crt
+            path: ca.crt
+      - downwardAPI:
+          items:
+          - path: namespace
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+  volumeMounts:
+  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+    name: serviceaccount-token
+    readOnly: true

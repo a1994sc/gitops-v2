@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ksca
+spec:
+  interval: 1m
+  chartRef:
+    kind: OCIRepository
+    name: ghcr-io-ksca
+  valuesFrom:
+  - kind: ConfigMap
+    name: ksca-values
+    optional: false
