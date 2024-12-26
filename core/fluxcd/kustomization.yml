@@ -12,8 +12,6 @@ labels:
 - pairs:
     app.kubernetes.io/instance: flux-system
     app.kubernetes.io/part-of: flux
-    # renovate: datasource=github-releases depName=fluxcd/flux2
-    app.kubernetes.io/version: v2.3.0
 images:
 - name: fluxcd/source-controller
   newName: ghcr.io/fluxcd/source-controller
