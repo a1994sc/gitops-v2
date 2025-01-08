@@ -7,17 +7,24 @@ for resource in "${resourceMap[@]}"; do
   url=$(echo "$resource" | yq e '.repo.url' -)
   tag=$(echo "$resource" | yq e '.repo.tag' -)
   file=$(echo "$resource" | yq e '.repo.path' -)
+  tempDir="$(mktemp -d -t temp.XXXXXX)"
 
   mkdir -p $path
 
   if [ `echo "$resource" | yq e '.file.extract'` = "true" ]; then
-    resourceTempDir="$(mktemp -d -t resources.XXXXXX)"
-    gh release download --repo $url --pattern $file --dir $resourceTempDir --clobber $tag
+    gh release download --repo $url --pattern $file --dir $tempDir --clobber $tag
 
-    tar -xf $resourceTempDir/$file -C $path --overwrite
+    tar -xf $tempDir/$file -C $path --overwrite
   elif [ `echo "$resource" | yq e '.repo.release'` = "true" ]; then
     gh release download --repo $url --pattern $file --dir $path --clobber $tag
   else
-    echo "TODO: gh file from repo"
+    gh repo clone $url $tempDir
+    if [ -d $tempDir/$file ]; then
+      cp -r $tempDir/$file/* $path
+    else
+      cp $tempDir/$file $path
+    fi
   fi
+
+  rm -rf $tempDir
 done
