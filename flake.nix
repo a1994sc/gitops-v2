@@ -77,6 +77,9 @@
             # keep-sorted end
           }
         );
+        env = {
+          ZARF_CONFIG = "$(${pkgs.git}/bin/git rev-parse --show-toplevel)/config/zarf-config.yaml";
+        };
       in
       {
         checks.pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
@@ -93,7 +96,12 @@
           };
         };
         devShells.default = nixpkgs.legacyPackages.${system}.mkShell {
-          shellHook = self.checks.${system}.pre-commit-check.shellHook;
+          shellHook =
+            self.checks.${system}.pre-commit-check.shellHook
+            + "\n"
+            + (builtins.concatStringsSep "\n" (
+              pkgs.lib.attrsets.mapAttrsToList (k: v: "export ${k}=${v}") env
+            ));
           buildInputs = with pkgs; [
             gh
           ];
