@@ -24,14 +24,10 @@ jobs:
     # Tool install
     - uses: sigstore/cosign-installer@v3.7.0
     - uses: fluxcd/flux2/action@v2.4.0
-    # Logic
-    - uses: actions/checkout@v4.2.2
-      with:
-        fetch-depth: 0
-        fetch-tags: true
     # Git logic
+    - uses: actions/checkout@v4.2.2
     - name: Fetch History
-      run: git fetch --prune --unshallow
+      run: git fetch --prune --unshallow --tags
     - if: github.ref_type == 'tag'
       shell: bash
       run: |
