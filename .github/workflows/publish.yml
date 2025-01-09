@@ -14,12 +14,24 @@ jobs:
       id-token: write # needed for keyless signing
       packages: write # needed for ghcr access
     steps:
+    # Login to registry
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3.3.0
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    # Tool install
+    - uses: sigstore/cosign-installer@v3.7.0
+    - uses: fluxcd/flux2/action@v2.4.0
+    # Logic
     - uses: actions/checkout@v4.2.2
       with:
         fetch-depth: 0
         fetch-tags: true
-    - uses: sigstore/cosign-installer@v3.7.0
-    - uses: fluxcd/flux2/action@v2.4.0
+    # Git logic
+    - name: Fetch History
+      run: git fetch --prune --unshallow
     - if: github.ref_type == 'tag'
       shell: bash
       run: |
@@ -28,12 +40,7 @@ jobs:
       shell: bash
       run: |
         echo "REV=$(git describe --first-parent --always | sed -r 's/^v//g; s/([0-9]+\.[0-9]+\.)([0-9]+)(-.+)/echo "\1$((\2+1))\3\"/ge; s/^/v/1')" >> "$GITHUB_ENV"
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3.3.0
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+    # Publish OCI artifacts
     - name: Publish Flux OCI artifact to GHCR
       run: |
         flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }} \
