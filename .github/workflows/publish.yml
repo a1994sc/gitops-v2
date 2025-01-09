@@ -26,12 +26,10 @@ jobs:
     - uses: fluxcd/flux2/action@v2.4.0
     # Git logic
     - uses: actions/checkout@v4.2.2
-    - name: Fetch History
-      run: git fetch --prune --unshallow --tags
     - if: github.ref_type == 'tag'
       shell: bash
       run: |
-        echo "REV=$(git describe --first-parent --always)" >> "$GITHUB_ENV"
+        echo "REV=${GITHUB_REF#/refs/*/}" >> "$GITHUB_ENV"
     - if: github.ref_type != 'tag'
       shell: bash
       run: |
