@@ -8,7 +8,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     pre-commit-hooks = {
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
       url = "github:cachix/pre-commit-hooks.nix";
     };
     systems.url = "github:nix-systems/default";
@@ -92,6 +91,8 @@
             end-of-file-fixer.enable = true;
             nixfmt-rfc-style.enable = true;
             trim-trailing-whitespace.enable = true;
+            commitizen.enable = true;
+            no-commit-to-branch.enable = true;
             # keep-sorted end
           };
         };
@@ -104,6 +105,7 @@
             ));
           buildInputs = with pkgs; [
             gh
+            cz-cli
           ];
         };
         formatter = treefmtEval.config.build.wrapper;
