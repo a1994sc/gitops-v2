@@ -7,7 +7,7 @@ spec:
   interval: 1m
   chartRef:
     kind: OCIRepository
-    name: chart-proxy-istio-base
+    name: istio-base
   valuesFrom:
   - kind: ConfigMap
     name: hr-values-istio-base

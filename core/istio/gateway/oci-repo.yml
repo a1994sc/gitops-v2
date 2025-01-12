@@ -2,12 +2,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: istio-cni
+  name: istio-gateway
 spec:
   interval: 12h
   layerSelector:
     mediaType: "application/vnd.cncf.helm.chart.content.v1.tar+gzip"
     operation: copy
-  url: oci://gcr.io/istio-release/charts/cni
+  url: oci://gcr.io/istio-release/charts/gateway
   ref:
     tag: 1.24.2
