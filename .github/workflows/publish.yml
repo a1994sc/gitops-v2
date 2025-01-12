@@ -32,7 +32,7 @@ jobs:
     - if: github.ref_type == 'tag'
       shell: bash
       run: |
-        echo "REV=$(echo $GITHUB_REF | sed -E 's/^ref\/.+\/(.+)/\1/g')" >> "$GITHUB_ENV"
+        echo "REV=${{ github.ref_name }}" >> "$GITHUB_ENV"
         echo "HASH=" >> "$GITHUB_ENV"
     - if: github.ref_type != 'tag'
       shell: bash
