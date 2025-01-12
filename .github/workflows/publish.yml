@@ -27,27 +27,28 @@ jobs:
     - uses: fluxcd/flux2/action@v2.4.0
     # Git logic
     - uses: actions/checkout@v4.2.2
+      with:
+        fetch-depth: 0
     - if: github.ref_type == 'tag'
       shell: bash
       run: |
         echo "REV=${GITHUB_REF#/refs/*/}" >> "$GITHUB_ENV"
+        echo "HASH=" >> "$GITHUB_ENV"
     - if: github.ref_type != 'tag'
       shell: bash
       run: |
-        TAG=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')
-        HSH=$(git describe --first-parent | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')
-        echo "REV=$TAG$HSH"
-        echo "REV=$TAG$HSH" >> "$GITHUB_ENV"
+        echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_ENV"
+        echo "HASH=$(git describe --first-parent | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_ENV"
     # Publish OCI artifacts
     - name: Publish Flux OCI artifact to GHCR
       run: |
-        flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }} \
+        flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} \
           --path="./." \
           --source="${{ github.event.repository.html_url }}" \
           --revision="${GITHUB_REF_NAME}/${GITHUB_SHA}"
-        flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }} --tag latest
+        flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} --tag latest
     - name: Sign artifacts with Cosign
       env:
         COSIGN_EXPERIMENTAL: 1
       run: |-
-        cosign sign ghcr.io/a1994sc/gitops/core:${{ env.REV }} --yes
+        cosign sign ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} --yes
