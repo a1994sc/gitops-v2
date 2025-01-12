@@ -2,15 +2,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: istio-ztunnel
+  name: istio-gateway
 spec:
   interval: 1m
   chartRef:
     kind: OCIRepository
-    name: istio-ztunnel
+    name: istio-gateway
   dependsOn:
   - name: istio-istiod
   valuesFrom:
   - kind: ConfigMap
-    name: hr-values-istio-ztunnel
+    name: hr-values-istio-gateway
     optional: false
+  values:
+    profile: ambient

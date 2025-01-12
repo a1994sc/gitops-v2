@@ -7,7 +7,7 @@ spec:
   interval: 1m
   chartRef:
     kind: OCIRepository
-    name: chart-proxy-istio-cni
+    name: istio-cni
   dependsOn:
   - name: istio-base
   valuesFrom:

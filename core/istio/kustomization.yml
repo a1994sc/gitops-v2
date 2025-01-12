@@ -7,4 +7,5 @@ resources:
 - base/
 - cni/
 - istiod/
+- gateway/
 - ztunnel/

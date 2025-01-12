@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: chart-proxy-istio-base
+  name: istio-base
 spec:
   interval: 12h
   layerSelector:
