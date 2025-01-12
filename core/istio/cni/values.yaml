@@ -39,4 +39,4 @@ global:
       cpu: 100m
       memory: 100Mi
 seLinuxOptions:
-#  type: spc_t
+  type: spc_t

@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/istio/istio/refs/tags/1.24.2/manifests/charts/gateway/values.schema.json
 name: public-ingressgateway
 replicaCount: 3
 kind: Deployment
