@@ -141,27 +141,27 @@ csi:
         limits:
           memory: 64Mi
   pluginTolerations:
-  - key: CriticalOnly
-    operator: Exists
-  - key: InfrastructureOnly
-    operator: Exists
+    - key: CriticalOnly
+      operator: Exists
+    - key: InfrastructureOnly
+      operator: Exists
   serviceMonitor:
     enabled: true
     namespace: rook-ceph
 tolerations:
-- key: CriticalOnly
-  operator: Exists
-- key: InfrastructureOnly
-  operator: Exists
+  - key: CriticalOnly
+    operator: Exists
+  - key: InfrastructureOnly
+    operator: Exists
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
-      - matchExpressions:
-        - key: CriticalOnly
-          operator: Exists
+        - matchExpressions:
+            - key: CriticalOnly
+              operator: Exists
 discover:
   tolerations:
-  - effect: NoSchedule
-    key: CriticalOnly
-    operator: Exists
+    - effect: NoSchedule
+      key: CriticalOnly
+      operator: Exists

@@ -9,6 +9,6 @@ spec:
     kind: OCIRepository
     name: ghcr-io-ksca
   valuesFrom:
-  - kind: ConfigMap
-    name: ksca-values
-    optional: false
+    - kind: ConfigMap
+      name: ksca-values
+      optional: false

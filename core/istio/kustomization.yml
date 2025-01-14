@@ -3,9 +3,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: istio-system
 resources:
-- namespace.yml
-- base/
-- cni/
-- istiod/
-- gateway/
-- ztunnel/
+  - namespace.yml
+  - base/
+  - cni/
+  - istiod/
+  - gateway/
+  - ztunnel/

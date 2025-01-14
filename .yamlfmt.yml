@@ -2,8 +2,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/google/yamlfmt/refs/heads/main/schema.json
 line_ending: lf
 exclude:
-- core/fluxcd/manifests
-- core/gateway
+  - core/fluxcd/manifests
+  - core/gateway
 formatter:
   type: basic
   include_document_start: true

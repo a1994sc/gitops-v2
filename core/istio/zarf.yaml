@@ -22,8 +22,8 @@ components:
         valuesFiles:
           - base/values.yaml
     images:
-    # Needed for the gateway pods
-    - docker.io/istio/proxyv2:1.24.2-distroless
+      # Needed for the gateway pods
+      - docker.io/istio/proxyv2:1.24.2-distroless
   - name: cni
     required: true
     charts:

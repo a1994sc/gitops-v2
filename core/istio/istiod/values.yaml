@@ -19,18 +19,18 @@ pilot:
   affinity:
     nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 1
-        preference:
-          matchExpressions:
-          - key: adrp.xyz/is-infra
-            operator: In
-            values:
-            - "true"
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: adrp.xyz/is-infra
+                operator: In
+                values:
+                  - "true"
   tolerations:
-  - key: CriticalOnly
-    operator: "Exists"
-  - key: InfrastructureOnly
-    operator: Exists
+    - key: CriticalOnly
+      operator: "Exists"
+    - key: InfrastructureOnly
+      operator: Exists
   cpu:
     targetAverageUtilization: 80
   memory: {}

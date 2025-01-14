@@ -1,6 +1,7 @@
+---
 package:
   create:
-    skip_sbom : false
+    skip_sbom: false
     set:
       agent_image_domain: ghcr.io/
       agent_image: zarf-dev/zarf/agent

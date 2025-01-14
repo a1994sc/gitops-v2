@@ -4,18 +4,18 @@ replicas: 2
 affinty:
   podAntiAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
-    - labelSelector:
-        matchExpressions:
-        - key: k8s-app
-          operator: In
-          values:
-          - "metrics-server"
-      topologyKey: kubernetes.io/hostname
+      - labelSelector:
+          matchExpressions:
+            - key: k8s-app
+              operator: In
+              values:
+                - "metrics-server"
+        topologyKey: kubernetes.io/hostname
 tolerations:
-- key: CriticalOnly
-  operator: Exists
-- key: InfrastructureOnly
-  operator: Exists
+  - key: CriticalOnly
+    operator: Exists
+  - key: InfrastructureOnly
+    operator: Exists
 resources:
   requests:
     cpu: 100m

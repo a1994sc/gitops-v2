@@ -9,8 +9,8 @@ spec:
     kind: OCIRepository
     name: istio-ztunnel
   dependsOn:
-  - name: istio-istiod
+    - name: istio-istiod
   valuesFrom:
-  - kind: ConfigMap
-    name: hr-values-istio-ztunnel
-    optional: false
+    - kind: ConfigMap
+      name: hr-values-istio-ztunnel
+      optional: false
