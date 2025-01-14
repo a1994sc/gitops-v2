@@ -79,6 +79,36 @@
         env = {
           ZARF_CONFIG = "$(${pkgs.git}/bin/git rev-parse --show-toplevel)/config/zarf-config.yaml";
         };
+        envShell = builtins.concatStringsSep "\n" (
+          pkgs.lib.attrsets.mapAttrsToList (k: v: "export ${k}=${v}") env
+        );
+        mkZarfPackage =
+          {
+            path,
+            pname,
+            version,
+            ...
+          }:
+          pkgs.stdenv.mkDerivation {
+            inherit version pname;
+            src = ./.;
+            shellHook = envShell;
+            buildInputs = [
+              pkgs.zarf
+            ];
+            buildPhase = ''
+              zarf package create ${path} --no-color --no-log-file --confirm
+            '';
+          };
+        shellHook =
+          self.checks.${system}.pre-commit-check.shellHook
+          + ''
+            export ZARF_CONFIG=$(git rev-parse --show-toplevel)/config/zarf-config.yaml
+          '';
+        buildInputs = [
+          pkgs.git
+          pkgs.gh
+        ] ++ self.checks.${system}.pre-commit-check.enabledPackages;
       in
       {
         checks.pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
@@ -87,28 +117,22 @@
             # keep-sorted start case=no
             check-executables-have-shebangs.enable = true;
             check-shebang-scripts-are-executable.enable = true;
+            commitizen.enable = true;
             detect-private-keys.enable = true;
             end-of-file-fixer.enable = true;
             nixfmt-rfc-style.enable = true;
-            trim-trailing-whitespace.enable = true;
-            commitizen.enable = true;
             no-commit-to-branch.enable = true;
+            trim-trailing-whitespace.enable = true;
             # keep-sorted end
           };
         };
-        devShells.default = nixpkgs.legacyPackages.${system}.mkShell {
-          shellHook =
-            self.checks.${system}.pre-commit-check.shellHook
-            + "\n"
-            + (builtins.concatStringsSep "\n" (
-              pkgs.lib.attrsets.mapAttrsToList (k: v: "export ${k}=${v}") env
-            ));
-          buildInputs = with pkgs; [
-            gh
-            cz-cli
-          ];
-        };
+        devShells.default = pkgs.mkShell { inherit shellHook buildInputs; };
         formatter = treefmtEval.config.build.wrapper;
+        packages.zarf-istio = mkZarfPackage {
+          path = ./core/istio;
+          pname = "istio-ambient";
+          version = "1.24.2";
+        };
       }
     );
 }
