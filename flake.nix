@@ -105,10 +105,16 @@
           + ''
             export ZARF_CONFIG=$(git rev-parse --show-toplevel)/config/zarf-config.yaml
           '';
-        buildInputs = [
-          pkgs.git
-          pkgs.gh
-        ] ++ self.checks.${system}.pre-commit-check.enabledPackages;
+        buildInputs =
+          with pkgs;
+          [
+            git
+            gh
+            (writeShellScriptBin "package" ''
+              zarf package create -o $(${git}/bin/git rev-parse --show-toplevel) --no-color --log-format=console --confirm $@
+            '')
+          ]
+          ++ self.checks.${system}.pre-commit-check.enabledPackages;
       in
       {
         checks.pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
