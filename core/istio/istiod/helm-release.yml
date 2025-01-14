@@ -9,10 +9,10 @@ spec:
     kind: OCIRepository
     name: istio-istiod
   dependsOn:
-  - name: istio-cni
+    - name: istio-cni
   valuesFrom:
-  - kind: ConfigMap
-    name: hr-values-istio-istiod
-    optional: false
+    - kind: ConfigMap
+      name: hr-values-istio-istiod
+      optional: false
   values:
     profile: ambient

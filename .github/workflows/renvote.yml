@@ -3,7 +3,7 @@ name: Populate Renovate resources
 on:
   push:
     branches:
-    - "renovate/**"
+      - "renovate/**"
 permissions:
   contents: write
   id-token: write # needed for keyless signing
@@ -12,24 +12,24 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'renovate[bot]' }}
     steps:
-    - name: Clone repo
-      uses: actions/checkout@v4.2.2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
-        fetch-depth: 0
-    - name: Configure gitsign
-      uses: chainguard-dev/actions/setup-gitsign@main
-    - name: Update checksum
-      env:
-        GH_TOKEN: ${{ github.token }}
-      run: |-
-        ./.github/hack/update.sh
+      - name: Clone repo
+        uses: actions/checkout@v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+      - name: Configure gitsign
+        uses: chainguard-dev/actions/setup-gitsign@main
+      - name: Update checksum
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |-
+          ./.github/hack/update.sh
 
-        # git push if we have a diff
-        if [[ `git status --porcelain=1 | wc -l` -ne 0 ]]; then
-          git add .
-          git config --global user.email "<29139614+renovate[bot]@users.noreply.github.com>"
-          git config --global user.name "renovate[bot]"
-          git commit -am "chore(resources): updated resources files"
-          git push origin ${{ github.ref_name }}
-        fi
+          # git push if we have a diff
+          if [[ `git status --porcelain=1 | wc -l` -ne 0 ]]; then
+            git add .
+            git config --global user.email "<29139614+renovate[bot]@users.noreply.github.com>"
+            git config --global user.name "renovate[bot]"
+            git commit -am "chore(resources): updated resources files"
+            git push origin ${{ github.ref_name }}
+          fi

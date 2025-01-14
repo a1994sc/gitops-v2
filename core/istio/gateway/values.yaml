@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/istio/istio/refs/tags/1.24.2/manifests/charts/gateway/values.schema.json
 name: public-ingressgateway
 replicaCount: 3
 kind: Deployment
@@ -12,18 +13,18 @@ containerSecurityContext: {}
 service:
   # type: LoadBalancer
   ports:
-  - name: status-port
-    port: 15021
-    protocol: TCP
-    targetPort: 15021
-  - name: http2
-    port: 80
-    protocol: TCP
-    targetPort: 8080
-  - name: https
-    port: 443
-    protocol: TCP
-    targetPort: 8443
+    - name: status-port
+      port: 15021
+      protocol: TCP
+      targetPort: 15021
+    - name: http2
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
 autoscaling:
   enabled: true
   minReplicas: 3
@@ -31,20 +32,20 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   targetMemoryUtilizationPercentage: {}
 tolerations:
-- key: CriticalOnly
-  operator: "Exists"
-- key: InfrastructureOnly
-  operator: Exists
+  - key: CriticalOnly
+    operator: "Exists"
+  - key: InfrastructureOnly
+    operator: Exists
 affinity:
   nodeAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 1
-      preference:
-        matchExpressions:
-        - key: "adrp.xyz/is-infra"
-          operator: In
-          values:
-          - "true"
+      - weight: 1
+        preference:
+          matchExpressions:
+            - key: "adrp.xyz/is-infra"
+              operator: In
+              values:
+                - "true"
 # A list of `Volumes` added into the Gateway Pods. See
 # https://kubernetes.io/docs/concepts/storage/volumes/.
 volumes: []

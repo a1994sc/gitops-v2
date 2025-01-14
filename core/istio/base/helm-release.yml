@@ -9,6 +9,6 @@ spec:
     kind: OCIRepository
     name: istio-base
   valuesFrom:
-  - kind: ConfigMap
-    name: hr-values-istio-base
-    optional: false
+    - kind: ConfigMap
+      name: hr-values-istio-base
+      optional: false

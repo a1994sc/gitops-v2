@@ -7,7 +7,7 @@ securityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop:
-    - ALL
+      - ALL
   readOnlyRootFilesystem: true
   runAsNonRoot: true
   runAsUser: 1000
@@ -25,41 +25,41 @@ resources:
     cpu: 100m
     memory: 192Mi
 tolerations:
-- key: InfrastructureOnly
-  operator: Exists
+  - key: InfrastructureOnly
+    operator: Exists
 affinity:
   nodeAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 1
-      preference:
-        matchExpressions:
-        - key: adrp.xyz/is-infra
-          operator: In
-          values:
-          - "true"
+      - weight: 1
+        preference:
+          matchExpressions:
+            - key: adrp.xyz/is-infra
+              operator: In
+              values:
+                - "true"
 extraVolumes:
-- name: serviceaccount-token
-  projected:
-    defaultMode: 0444
-    sources:
-    - serviceAccountToken:
-        expirationSeconds: 3607
-        path: token
-    - configMap:
-        name: kube-root-ca.crt
-        items:
-        - key: ca.crt
-          path: ca.crt
-    - downwardAPI:
-        items:
-        - path: namespace
-          fieldRef:
-            apiVersion: v1
-            fieldPath: metadata.namespace
+  - name: serviceaccount-token
+    projected:
+      defaultMode: 0444
+      sources:
+        - serviceAccountToken:
+            expirationSeconds: 3607
+            path: token
+        - configMap:
+            name: kube-root-ca.crt
+            items:
+              - key: ca.crt
+                path: ca.crt
+        - downwardAPI:
+            items:
+              - path: namespace
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
 extraVolumeMounts:
-- mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-  name: serviceaccount-token
-  readOnly: true
+  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+    name: serviceaccount-token
+    readOnly: true
 webhook:
   replicaCount: 2
   image:
@@ -68,7 +68,7 @@ webhook:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: true
     runAsNonRoot: true
     runAsUser: 1000
@@ -85,41 +85,41 @@ webhook:
       cpu: 100m
       memory: 192Mi
   tolerations:
-  - key: InfrastructureOnly
-    operator: Exists
+    - key: InfrastructureOnly
+      operator: Exists
   affinity:
     nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 1
-        preference:
-          matchExpressions:
-          - key: adrp.xyz/is-infra
-            operator: In
-            values:
-            - "true"
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: adrp.xyz/is-infra
+                operator: In
+                values:
+                  - "true"
   extraVolumes:
-  - name: serviceaccount-token
-    projected:
-      defaultMode: 0444
-      sources:
-      - serviceAccountToken:
-          expirationSeconds: 3607
-          path: token
-      - configMap:
-          name: kube-root-ca.crt
-          items:
-          - key: ca.crt
-            path: ca.crt
-      - downwardAPI:
-          items:
-          - path: namespace
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
+    - name: serviceaccount-token
+      projected:
+        defaultMode: 0444
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
   extraVolumeMounts:
-  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-    name: serviceaccount-token
-    readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: serviceaccount-token
+      readOnly: true
 certController:
   replicaCount: 2
   image:
@@ -128,7 +128,7 @@ certController:
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-      - ALL
+        - ALL
     readOnlyRootFilesystem: true
     runAsNonRoot: true
     runAsUser: 1000
@@ -145,38 +145,38 @@ certController:
       cpu: 100m
       memory: 192Mi
   tolerations:
-  - key: InfrastructureOnly
-    operator: Exists
+    - key: InfrastructureOnly
+      operator: Exists
   affinity:
     nodeAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 1
-        preference:
-          matchExpressions:
-          - key: adrp.xyz/is-infra
-            operator: In
-            values:
-            - "true"
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: adrp.xyz/is-infra
+                operator: In
+                values:
+                  - "true"
   extraVolumes:
-  - name: serviceaccount-token
-    projected:
-      defaultMode: 0444
-      sources:
-      - serviceAccountToken:
-          expirationSeconds: 3607
-          path: token
-      - configMap:
-          name: kube-root-ca.crt
-          items:
-          - key: ca.crt
-            path: ca.crt
-      - downwardAPI:
-          items:
-          - path: namespace
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
+    - name: serviceaccount-token
+      projected:
+        defaultMode: 0444
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
   extraVolumeMounts:
-  - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-    name: serviceaccount-token
-    readOnly: true
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: serviceaccount-token
+      readOnly: true

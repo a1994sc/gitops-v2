@@ -18,4 +18,4 @@ resources:
 istioNamespace: istio-system
 logLevel: info
 seLinuxOptions:
-#  type: spc_t
+  type: spc_t

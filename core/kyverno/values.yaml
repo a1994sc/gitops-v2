@@ -1,18 +1,18 @@
 ---
 config:
   resourceFiltersExcludeNamespaces:
-  - rook-ceph
+    - rook-ceph
 metricsConfig:
   metricsExposure:
     kyverno_policy_execution_duration_seconds:
       disabledLabelDimensions:
-      - "resource_kind"
-      - "resource_namespace"
-      - "resource_request_operation"
+        - "resource_kind"
+        - "resource_namespace"
+        - "resource_request_operation"
       bucketBoundaries:
-      - 0.005
-      - 0.01
-      - 0.025
+        - 0.005
+        - 0.01
+        - 0.025
     kyverno_admission_review_duration_seconds:
       enabled: false
 grafana:
@@ -34,12 +34,12 @@ cleanupJobs:
       runAsUser: 65534
       capabilities:
         drop:
-        - ALL
+          - ALL
       seccompProfile:
         type: RuntimeDefault
     tolerations:
-    - key: InfrastructureOnly
-      operator: Exists
+      - key: InfrastructureOnly
+        operator: Exists
   clusterAdmissionReports:
     enabled: true
     image:
@@ -55,12 +55,12 @@ cleanupJobs:
       runAsUser: 65534
       capabilities:
         drop:
-        - ALL
+          - ALL
       seccompProfile:
         type: RuntimeDefault
     tolerations:
-    - key: InfrastructureOnly
-      operator: Exists
+      - key: InfrastructureOnly
+        operator: Exists
 admissionController:
   replicas: 3
   podLabels: {}
@@ -72,15 +72,15 @@ admissionController:
     enabled: true
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 1
-      podAffinityTerm:
-        labelSelector:
-          matchExpressions:
-          - key: app.kubernetes.io/component
-            operator: In
-            values:
-            - admission-controller
-        topologyKey: kubernetes.io/hostname
+      - weight: 1
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - admission-controller
+          topologyKey: kubernetes.io/hostname
   initContainer:
     image:
       registry: ghcr.io
@@ -99,7 +99,7 @@ admissionController:
       runAsUser: 65534
       capabilities:
         drop:
-        - ALL
+          - ALL
       seccompProfile:
         type: RuntimeDefault
   container:
@@ -120,14 +120,14 @@ admissionController:
       runAsUser: 65534
       capabilities:
         drop:
-        - ALL
+          - ALL
       seccompProfile:
         type: RuntimeDefault
   tolerations:
-  - key: CriticalOnly
-    operator: Exists
-  - key: InfrastructureOnly
-    operator: Exists
+    - key: CriticalOnly
+      operator: Exists
+    - key: InfrastructureOnly
+      operator: Exists
   metricsService:
     create: true
   networkPolicy:
@@ -157,14 +157,14 @@ backgroundController:
     runAsUser: 65534
     capabilities:
       drop:
-      - ALL
+        - ALL
     seccompProfile:
       type: RuntimeDefault
   tolerations:
-  - key: CriticalOnly
-    operator: Exists
-  - key: InfrastructureOnly
-    operator: Exists
+    - key: CriticalOnly
+      operator: Exists
+    - key: InfrastructureOnly
+      operator: Exists
   metricsService:
     create: true
   networkPolicy:
@@ -194,14 +194,14 @@ reportsController:
     runAsUser: 65534
     capabilities:
       drop:
-      - ALL
+        - ALL
     seccompProfile:
       type: RuntimeDefault
   tolerations:
-  - key: CriticalOnly
-    operator: Exists
-  - key: InfrastructureOnly
-    operator: Exists
+    - key: CriticalOnly
+      operator: Exists
+    - key: InfrastructureOnly
+      operator: Exists
   metricsService:
     create: true
   networkPolicy:
@@ -218,10 +218,10 @@ cleanupController:
     repository: kyverno/cleanup-controller
   replicas: 2
   tolerations:
-  - key: CriticalOnly
-    operator: Exists
-  - key: InfrastructureOnly
-    operator: Exists
+    - key: CriticalOnly
+      operator: Exists
+    - key: InfrastructureOnly
+      operator: Exists
   resources:
     limits:
       memory: 128Mi
@@ -236,7 +236,7 @@ cleanupController:
     runAsUser: 65534
     capabilities:
       drop:
-      - ALL
+        - ALL
     seccompProfile:
       type: RuntimeDefault
   metricsService:

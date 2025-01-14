@@ -1,3 +1,4 @@
+---
 name: Daily Image Cleanup
 on:
   # every day at 01:30am

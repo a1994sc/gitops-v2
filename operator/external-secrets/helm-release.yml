@@ -9,6 +9,6 @@ spec:
     kind: OCIRepository
     name: ghcr-io-external-secrets
   valuesFrom:
-  - kind: ConfigMap
-    name: external-secrets-values
-    optional: false
+    - kind: ConfigMap
+      name: external-secrets-values
+      optional: false

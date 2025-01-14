@@ -9,9 +9,9 @@ spec:
     kind: OCIRepository
     name: ghcr-io-kyverno
   valuesFrom:
-  - kind: ConfigMap
-    name: kyverno-values
-    optional: false
+    - kind: ConfigMap
+      name: kyverno-values
+      optional: false
   values:
     admissionController:
       initContainer:

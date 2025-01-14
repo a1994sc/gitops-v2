@@ -10,6 +10,6 @@ spec:
     kind: OCIRepository
     name: chart-proxy-rook-ceph
   valuesFrom:
-  - kind: ConfigMap
-    name: rook-ceph-operator-values
-    optional: false
+    - kind: ConfigMap
+      name: rook-ceph-operator-values
+      optional: false
