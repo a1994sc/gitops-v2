@@ -46,6 +46,9 @@
             "properties": {
               "extract": {
                 "type": "boolean"
+              },
+              "match": {
+                "type": "string"
               }
             }
           }
