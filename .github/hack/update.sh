@@ -18,9 +18,12 @@ for resource in "${resourceMap[@]}"; do
   elif [ `echo "$resource" | yq e '.repo.release'` = "true" ]; then
     gh release download --repo $url --pattern $file --dir $path --clobber $tag
   else
+    match=$(echo "$resource" | yq e '.file.match')
     gh repo clone $url $tempDir
-    if [ -d $tempDir/$file ]; then
+    if [ -d $tempDir/$file ] && [ $match = "null" ] ; then
       cp -r $tempDir/$file/* $path
+    elif [ -d $tempDir/$file ] && [ $match != "null" ]; then
+      cp -r $tempDir/$file/$match $path
     else
       cp $tempDir/$file $path
     fi

@@ -110,6 +110,7 @@
           [
             git
             gh
+            renovate
             (writeShellScriptBin "package" ''
               zarf package create -o $(${git}/bin/git rev-parse --show-toplevel) --no-color --log-format=console --confirm $@
             '')
