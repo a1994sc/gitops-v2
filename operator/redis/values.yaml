@@ -1,0 +1,28 @@
+---
+redisOperator:
+  name: redis-operator
+  imageName: quay.io/opstree/redis-operator
+resources:
+  limits:
+    cpu: 1000m
+    memory: 512Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
+replicas: 2
+certmanager:
+  enabled: false
+podSecurityContext:
+  runAsUser: 1001
+  runAsGroup: 1001
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  runAsUser: 1001
+  runAsGroup: 1001
+  runAsNonRoot: true
