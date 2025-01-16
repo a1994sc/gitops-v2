@@ -6,7 +6,7 @@ resources:
   - helm-repo.yml
   - helm-release.yml
 configMapGenerator:
-  - name: metrics-server-values
+  - name: hr-values-metrics-server
     files:
       - values.yaml
     options:

@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/a1994sc/gitops-v2/refs/heads/main/.github/hack/resources.schema.json",
   "projects": [
     {
-      "path": "core/gateway",
+      "path": "apps/gateway",
       "repo": {
         "url": "https://github.com/kubernetes-sigs/gateway-api",
         "renovate": "datasource=github-releases depName=kubernetes-sigs/gateway-api",
@@ -12,7 +12,7 @@
       }
     },
     {
-      "path": "core/fluxcd/manifests",
+      "path": "apps/fluxcd/manifests",
       "file": {
         "extract": true
       },
@@ -25,7 +25,7 @@
       }
     },
     {
-      "path": "app/capacitor",
+      "path": "apps/capacitor",
       "file": {
         "match": "*.yaml"
       },
