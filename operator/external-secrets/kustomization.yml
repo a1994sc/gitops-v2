@@ -7,7 +7,7 @@ resources:
   - helm-release.yml
   - oci-repo.yml
 configMapGenerator:
-  - name: external-secrets-values
+  - name: hr-values-external-secrets
     files:
       - values.yaml
     options:
