@@ -45,7 +45,9 @@ jobs:
           flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} \
             --path="./." \
             --source="${{ github.event.repository.html_url }}" \
-            --revision="${GITHUB_REF_NAME}/${GITHUB_SHA}"
+            --revision="${GITHUB_REF_NAME}/${GITHUB_SHA}" \
+            --annotations='org.opencontainers.image.description=Gitops core for FluxCD' \
+            --annotations='org.opencontainers.image.documentation=https://github.com/a1994sc/gitops-v2'
           flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} --tag latest
       - name: Sign artifacts with Cosign
         env:
