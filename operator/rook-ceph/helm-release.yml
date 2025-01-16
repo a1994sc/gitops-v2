@@ -11,5 +11,5 @@ spec:
     name: chart-proxy-rook-ceph
   valuesFrom:
     - kind: ConfigMap
-      name: rook-ceph-operator-values
+      name: hr-values-rook-ceph-operator
       optional: false

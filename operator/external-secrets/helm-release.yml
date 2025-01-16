@@ -10,5 +10,5 @@ spec:
     name: ghcr-io-external-secrets
   valuesFrom:
     - kind: ConfigMap
-      name: external-secrets-values
+      name: hr-values-external-secrets
       optional: false
