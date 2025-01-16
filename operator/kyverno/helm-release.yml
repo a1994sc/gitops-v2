@@ -10,7 +10,7 @@ spec:
     name: ghcr-io-kyverno
   valuesFrom:
     - kind: ConfigMap
-      name: kyverno-values
+      name: hr-values-kyverno
       optional: false
   values:
     admissionController:
