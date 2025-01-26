@@ -1,7 +1,9 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/external-secrets/external-secrets/refs/heads/main/deploy/charts/external-secrets/values.schema.json
 leaderElect: true
 replicaCount: 2
 image:
+  repository: ghcr.io/external-secrets/external-secrets
   flavour: ubi-boringssl
 securityContext:
   allowPrivilegeEscalation: false
@@ -63,6 +65,7 @@ extraVolumeMounts:
 webhook:
   replicaCount: 2
   image:
+    repository: ghcr.io/external-secrets/external-secrets
     flavour: ubi-boringssl
   securityContext:
     allowPrivilegeEscalation: false
@@ -123,6 +126,7 @@ webhook:
 certController:
   replicaCount: 2
   image:
+    repository: ghcr.io/external-secrets/external-secrets
     flavour: ubi-boringssl
   securityContext:
     allowPrivilegeEscalation: false

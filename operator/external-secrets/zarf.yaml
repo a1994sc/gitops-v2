@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/zarf-dev/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: external-secrets
+  # renovate: datasource=docker depName=ghcr.io/external-secrets/charts/external-secrets
+  version: 0.13.0
+components:
+  - name: main
+    manifests:
+      - name: external-secrets
+        namespace: external-secrets # This is where the helm secret/state is stored.
+        kustomizations:
+          - ./.
+    images:
+      - ghcr.io/external-secrets/external-secrets:v0.13.0-ubi-boringssl
+      - ghcr.io/external-secrets/charts/external-secrets:0.13.0
+  - name: images
+    required: false
+    charts:
+      - name: external-secrets
+        namespace: external-secrets
+        url: oci://ghcr.io/external-secrets/charts/external-secrets
+        version: 0.13.0
+        valuesFiles:
+          - values.yaml
