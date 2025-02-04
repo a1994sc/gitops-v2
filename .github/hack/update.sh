@@ -20,6 +20,8 @@ for resource in "${resourceMap[@]}"; do
   else
     match=$(echo "$resource" | yq e '.file.match')
     gh repo clone $url $tempDir
+    git -C $tempDir checkout tags/$tag
+
     if [ -d $tempDir/$file ] && [ $match = "null" ] ; then
       cp -r $tempDir/$file/* $path
     elif [ -d $tempDir/$file ] && [ $match != "null" ]; then
