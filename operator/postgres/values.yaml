@@ -1,0 +1,48 @@
+---
+tolerations:
+  - key: InfrastructureOnly
+    operator: Exists
+image:
+  registry: ghcr.io
+  repository: zalando/postgres-operator
+podLabels:
+  adrp.xyz/app: postgres-operator
+configKubernetes:
+  enable_cross_namespace_secret: false
+  enable_init_containers: true
+  enable_pod_antiaffinity: true
+  secret_name_template: "{username}-{cluster}-credentials"
+configPostgresPodResources:
+  default_cpu_limit: "0"
+  default_cpu_request: 100m
+  default_memory_limit: 512Mi
+  default_memory_request: 100Mi
+  max_cpu_request: "0"
+  max_memory_request: 2Gi
+  min_cpu_limit: "0"
+  min_memory_limit: 250Mi
+configUsers:
+  enable_password_rotation: true
+  password_rotation_interval: 5
+  password_rotation_user_retention: 180
+resources:
+  limits:
+    cpu: null
+    memory: 500Mi
+  requests:
+    cpu: 100m
+    memory: 250Mi
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  runAsNonRoot: true
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+    drop:
+      - ALL
+configGeneral:
+  enable_lazy_spilo_upgrade: true
+  resync_period: "15m"
