@@ -23,7 +23,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       # Tool install
-      - uses: sigstore/cosign-installer@v3.7.0
+      - uses: sigstore/cosign-installer@v3.8.0
       - uses: fluxcd/flux2/action@v2.4.0
       # Git logic
       - uses: actions/checkout@v4.2.2
