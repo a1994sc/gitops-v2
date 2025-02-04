@@ -61,7 +61,7 @@ spec:
             description: Spec defines the desired state of Gateway.
             properties:
               addresses:
-                description: |+
+                description: |-
                   Addresses requested for this Gateway. This is optional and behavior can
                   depend on the implementation. If a value is set in the spec and the
                   requested address is invalid or unavailable, the implementation MUST
@@ -82,7 +82,6 @@ spec:
                   GatewayStatus.Addresses.
 
                   Support: Extended
-
                 items:
                   description: GatewayAddress describes an address that can be bound
                     to a Gateway.
@@ -227,6 +226,11 @@ spec:
                       The Gateway's GatewayClass may provide its own `parametersRef`. When both are specified,
                       the merging behavior is implementation specific.
                       It is generally recommended that GatewayClass provides defaults that can be overridden by a Gateway.
+
+                      If the referent cannot be found, refers to an unsupported kind, or when
+                      the data within that resource is malformed, the Gateway SHOULD be
+                      rejected with the "Accepted" status condition set to "False" and an
+                      "InvalidParameters" reason.
 
                       Support: Implementation-specific
                     properties:
@@ -813,7 +817,7 @@ spec:
             description: Status defines the current state of Gateway.
             properties:
               addresses:
-                description: |+
+                description: |-
                   Addresses lists the network addresses that have been bound to the
                   Gateway.
 
@@ -823,7 +827,6 @@ spec:
                     * no addresses are specified, all addresses are dynamically assigned
                     * a combination of specified and dynamic addresses are assigned
                     * a specified address was unusable (e.g. already in use)
-
                 items:
                   description: GatewayStatusAddress describes a network address that
                     is bound to a Gateway.
@@ -1141,7 +1144,7 @@ spec:
             description: Spec defines the desired state of Gateway.
             properties:
               addresses:
-                description: |+
+                description: |-
                   Addresses requested for this Gateway. This is optional and behavior can
                   depend on the implementation. If a value is set in the spec and the
                   requested address is invalid or unavailable, the implementation MUST
@@ -1162,7 +1165,6 @@ spec:
                   GatewayStatus.Addresses.
 
                   Support: Extended
-
                 items:
                   description: GatewayAddress describes an address that can be bound
                     to a Gateway.
@@ -1307,6 +1309,11 @@ spec:
                       The Gateway's GatewayClass may provide its own `parametersRef`. When both are specified,
                       the merging behavior is implementation specific.
                       It is generally recommended that GatewayClass provides defaults that can be overridden by a Gateway.
+
+                      If the referent cannot be found, refers to an unsupported kind, or when
+                      the data within that resource is malformed, the Gateway SHOULD be
+                      rejected with the "Accepted" status condition set to "False" and an
+                      "InvalidParameters" reason.
 
                       Support: Implementation-specific
                     properties:
@@ -1893,7 +1900,7 @@ spec:
             description: Status defines the current state of Gateway.
             properties:
               addresses:
-                description: |+
+                description: |-
                   Addresses lists the network addresses that have been bound to the
                   Gateway.
 
@@ -1903,7 +1910,6 @@ spec:
                     * no addresses are specified, all addresses are dynamically assigned
                     * a combination of specified and dynamic addresses are assigned
                     * a specified address was unusable (e.g. already in use)
-
                 items:
                   description: GatewayStatusAddress describes a network address that
                     is bound to a Gateway.
