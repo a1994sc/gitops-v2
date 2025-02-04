@@ -5,3 +5,4 @@ target/
 result
 result-man
 *.zst
+zarf-sbom/

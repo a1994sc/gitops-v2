@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/zarf-dev/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: fluxcd
+  # renovate: datasource=github-tags depName=fluxcd/flux2
+  version: 2.4.0
+components:
+  - name: fluxcd
+    manifests:
+      - name: flux
+        namespace: flux-system # This is where the helm secret/state is stored.
+        kustomizations:
+          - ./.
+    images:
+      - ghcr.io/fluxcd/helm-controller:v1.1.0
+      - ghcr.io/fluxcd/kustomize-controller:v1.4.0
+      - ghcr.io/fluxcd/notification-controller:v1.4.0
+      - ghcr.io/fluxcd/source-controller:v1.4.1
