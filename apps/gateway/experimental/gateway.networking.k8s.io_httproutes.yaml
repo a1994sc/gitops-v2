@@ -2513,7 +2513,7 @@ spec:
                       properties:
                         attempts:
                           description: |-
-                            Attempts specifies the maximum number of times an individual request
+                            Attempts specifies the maxmimum number of times an individual request
                             from the gateway to a backend should be retried.
 
                             If the maximum number of retries has been attempted without a successful
@@ -2634,8 +2634,6 @@ spec:
                                 When set to "Session", AbsoluteTimeout indicates the
                                 absolute lifetime of the cookie tracked by the gateway and
                                 is optional.
-
-                                Defaults to "Session".
 
                                 Support: Core for "Session" type
 
@@ -5581,7 +5579,7 @@ spec:
                       properties:
                         attempts:
                           description: |-
-                            Attempts specifies the maximum number of times an individual request
+                            Attempts specifies the maxmimum number of times an individual request
                             from the gateway to a backend should be retried.
 
                             If the maximum number of retries has been attempted without a successful
@@ -5702,8 +5700,6 @@ spec:
                                 When set to "Session", AbsoluteTimeout indicates the
                                 absolute lifetime of the cookie tracked by the gateway and
                                 is optional.
-
-                                Defaults to "Session".
 
                                 Support: Core for "Session" type
 
