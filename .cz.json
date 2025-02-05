@@ -6,7 +6,7 @@
     "version": "0.0.2",
     "update_changelog_on_bump": true,
     "version_files": [
-      "./config/zarf-config.yaml:version"
+      "./config/zarf-config.yaml:package.create.set.version"
     ]
   }
 }
