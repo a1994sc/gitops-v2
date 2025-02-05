@@ -1,4 +1,7 @@
 ---
+confirm: true
+no_color: true
+log_format: console
 package:
   create:
     skip_sbom: false
