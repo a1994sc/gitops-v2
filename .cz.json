@@ -4,6 +4,9 @@
     "tag_format": "v$version",
     "version_scheme": "semver",
     "version": "0.0.1",
-    "update_changelog_on_bump": true
+    "update_changelog_on_bump": true,
+    "version_files": [
+      "./config/zarf-config.yaml:version"
+    ]
   }
 }
