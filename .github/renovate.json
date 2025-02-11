@@ -53,6 +53,29 @@
         "bump"
       ],
       "commitMessagePrefix": "chore(oci-deps): "
+    },
+    {
+      "description": [
+        "Istio"
+      ],
+      "groupName": "Istio",
+      "matchDatasources": [
+        "docker",
+        "helm",
+        "regex"
+      ],
+      "separateMajorMinor": false,
+      "matchPackageNames": [
+        "gcr.io/istio-release/charts/base",
+        "gcr.io/istio-release/charts/cni",
+        "gcr.io/istio-release/charts/istiod",
+        "gcr.io/istio-release/charts/ztunnel",
+        "gcr.io/istio-release/charts/gateway",
+        "docker.io/istio/proxyv2",
+        "docker.io/istio/install-cni",
+        "docker.io/istio/pilot",
+        "docker.io/istio/ztunnel"
+      ]
     }
   ],
   "customManagers": [

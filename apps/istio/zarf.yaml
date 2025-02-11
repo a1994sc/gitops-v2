@@ -3,7 +3,7 @@
 kind: ZarfPackageConfig
 metadata:
   name: istio-ambient
-  version: 1.24.2
+  version: 1.24.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/base
 components:
   - name: namespace
     required: true
@@ -18,53 +18,53 @@ components:
       - name: base
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/base
-        version: 1.24.2
+        version: 1.24.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/base
         valuesFiles:
           - base/values.yaml
     images:
       # Needed for the gateway pods
-      - docker.io/istio/proxyv2:1.24.2-distroless
+      - docker.io/istio/proxyv2:1.24.2-distroless # renovate: datasource=docker depName=docker.io/istio/proxyv2
   - name: cni
     required: true
     charts:
       - name: cni
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/cni
-        version: 1.24.2
+        version: 1.24.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/cni
         valuesFiles:
           - cni/values.yaml
     images:
-      - docker.io/istio/install-cni:1.24.2-distroless
+      - docker.io/istio/install-cni:1.24.2-distroless # renovate: datasource=docker depName=docker.io/istio/install-cni
   - name: istiod
     required: true
     charts:
       - name: istiod
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/istiod
-        version: 1.24.2
+        version: 1.24.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/istiod
         valuesFiles:
           - istiod/values.yaml
     images:
-      - docker.io/istio/pilot:1.24.2-distroless
+      - docker.io/istio/pilot:1.24.2-distroless # renovate: datasource=docker depName=docker.io/istio/pilot
   - name: istio-gateway
     required: true
     charts:
       - name: gateway
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/gateway
-        version: 1.24.2
+        version: 1.24.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/gateway
         valuesFiles:
           - gateway/values.yaml
     images:
-      - docker.io/istio/pilot:1.24.2-distroless
+      - docker.io/istio/pilot:1.24.2-distroless # renovate: datasource=docker depName=docker.io/istio/pilot
   - name: ztunnel
     required: true
     charts:
       - name: ztunnel
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/ztunnel
-        version: 1.24.2
+        version: 1.24.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/ztunnel
         valuesFiles:
           - ztunnel/values.yaml
     images:
-      - docker.io/istio/ztunnel:1.24.2-distroless
+      - docker.io/istio/ztunnel:1.24.2-distroless # renovate: datasource=docker depName=docker.io/istio/ztunnel
