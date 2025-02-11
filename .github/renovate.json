@@ -78,6 +78,7 @@
         "(^|/).+\\.ya?ml(\\.j2)?$"
       ],
       "matchStrings": [
+        "(?m:['\"]?v?(?<currentValue>[0-9][0-9a-zA-Z]*([\\.\\-][0-9a-zA-Z\\-]*)*)['\"]? # renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?)",
         "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+?: ?\"?.*(?<currentValue>\\S+?)\"?$)",
         "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+?/(?<currentValue>(v|\\d)[^/]+)\\S+$)"
       ],
