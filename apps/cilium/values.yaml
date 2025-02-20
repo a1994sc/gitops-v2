@@ -1,0 +1,115 @@
+---
+kubeProxyReplacement: true
+k8sServiceHost: localhost
+k8sServicePort: 7445
+envoy:
+  enabled: false
+cgroup:
+  hostRoot: /sys/fs/cgroup
+  autoMount:
+    enabled: false
+ipam:
+  mode: kubernetes
+k8sClientRateLimit:
+  qps: 33
+  burst: 70
+ingressController:
+  enabled: false
+  default: true
+  enforceHttps: false
+  loadbalancerMode: shared
+devices:
+- eth+
+- eno+
+l2announcements:
+  enabled: true
+  leaseDuration: 120s
+  leaseRenewDeadline: 60s
+  leaseRetryPeriod: 1s
+localRedirectPolicy: true
+l2podAnnouncements:
+  enabled: true
+  interface: eno1
+operator:
+  enabled: true
+  rollOutPods: true
+  prometheus:
+    enabled: false
+    serviceMonitor:
+      enabled: false
+prometheus:
+  enabled: false
+  serviceMonitor:
+    enabled: false
+endpointRoutes:
+  enabled: true
+rollOutCiliumPods: true
+tls:
+  caBundle:
+    enabled: true
+    name: tls-ca-cert
+    key: ca.crt
+gatewayAPI:
+  enabled: true
+hubble:
+  metrics:
+    enableOpenMetrics: true
+    serviceMonitor:
+      enabled: false
+  ui:
+    enabled: true
+    rollOutPods: true
+    tolerations:
+    - key: CriticalOnly
+      operator: "Exists"
+    - key: InfrastructureOnly
+      operator: Exists
+    service:
+      type: ClusterIP
+  relay:
+    enabled: true
+    rollOutPods: true
+    tolerations:
+    - key: CriticalOnly
+      operator: "Exists"
+    - key: InfrastructureOnly
+      operator: Exists
+    prometheus:
+      enabled: false
+      serviceMonitor:
+        enabled: false
+  tls:
+    auto:
+      enabled: true
+      method: certmanager
+      certValidityDuration: 7
+      certManagerIssuerRef:
+        group: certmanager.step.sm
+        kind: StepClusterIssuer
+        name: step-issuer
+securityContext:
+  capabilities:
+    ciliumAgent:
+    - CHOWN
+    - KILL
+    - NET_ADMIN
+    - NET_RAW
+    - IPC_LOCK
+    - SYS_ADMIN
+    - SYS_RESOURCE
+    - DAC_OVERRIDE
+    - FOWNER
+    - SETGID
+    - SETUID
+    - PERFMON
+    - BPF
+    cleanCiliumState:
+    - NET_ADMIN
+    - SYS_ADMIN
+    - SYS_RESOURCE
+    - PERFMON
+    - BPF
+socketLB:
+  hostNamespaceOnly: true
+cni:
+  exclusive: false

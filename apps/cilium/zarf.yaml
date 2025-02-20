@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/zarf-dev/zarf/main/zarf.schema.json
+kind: ZarfPackageConfig
+metadata:
+  name: cni-cilium
+  version: 1.17.0
+components:
+  - name: base
+    required: true
+    charts:
+      - name: cilium
+        namespace: kube-system
+        url: https://helm.cilium.io/
+        version: 1.17.0
+        valuesFiles:
+          - values.yaml
+    images:
+      - quay.io/cilium/cilium:v1.17.0@sha256:51f21bdd003c3975b5aaaf41bd21aee23cc08f44efaa27effc91c621bc9d8b1d
+      - quay.io/cilium/hubble-relay:v1.17.0@sha256:022c084588caad91108ac73e04340709926ea7fe12af95f57fcb794b68472e05
+      - quay.io/cilium/hubble-ui-backend:v0.13.1@sha256:0e0eed917653441fded4e7cdb096b7be6a3bddded5a2dd10812a27b1fc6ed95b
+      - quay.io/cilium/hubble-ui:v0.13.1@sha256:e2e9313eb7caf64b0061d9da0efbdad59c6c461f6ca1752768942bfeda0796c6
+      - quay.io/cilium/operator-generic:v1.17.0@sha256:1ce5a5a287166fc70b6a5ced3990aaa442496242d1d4930b5a3125e44cccdca8
+      # Cosign artifacts for images - cni-cilium - base
+      - quay.io/cilium/cilium:sha256-51f21bdd003c3975b5aaaf41bd21aee23cc08f44efaa27effc91c621bc9d8b1d.sig
+      - quay.io/cilium/cilium:sha256-51f21bdd003c3975b5aaaf41bd21aee23cc08f44efaa27effc91c621bc9d8b1d.att
+      - quay.io/cilium/hubble-relay:sha256-022c084588caad91108ac73e04340709926ea7fe12af95f57fcb794b68472e05.sig
+      - quay.io/cilium/hubble-relay:sha256-022c084588caad91108ac73e04340709926ea7fe12af95f57fcb794b68472e05.att
+      - quay.io/cilium/operator-generic:sha256-1ce5a5a287166fc70b6a5ced3990aaa442496242d1d4930b5a3125e44cccdca8.sig
+      - quay.io/cilium/operator-generic:sha256-1ce5a5a287166fc70b6a5ced3990aaa442496242d1d4930b5a3125e44cccdca8.att
