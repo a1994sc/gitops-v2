@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       # Tool install
       - uses: sigstore/cosign-installer@v3.8.1
-      - uses: fluxcd/flux2/action@v2.4.0
+      - uses: fluxcd/flux2/action@v2.5.0
       # Git logic
       - uses: actions/checkout@v4.2.2
         with:
