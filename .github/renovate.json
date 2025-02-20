@@ -30,7 +30,8 @@
       "groupName": "Flux",
       "matchDatasources": [
         "docker",
-        "github-tags"
+        "github-tags",
+        "github-releases"
       ],
       "versioning": "semver",
       "group": {
