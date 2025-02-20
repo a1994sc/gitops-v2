@@ -131,7 +131,7 @@
               ".cz.json"
             ];
             nixfmt-rfc-style.enable = true;
-            no-commit-to-branch.enable = true;
+            # no-commit-to-branch.enable = true;
             trim-trailing-whitespace.enable = true;
             # keep-sorted end
           };
