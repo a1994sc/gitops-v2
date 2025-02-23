@@ -1,9 +1,81 @@
 {
   "commitizen": {
-    "name": "cz_conventional_commits",
+    "name": "cz_customize",
     "tag_format": "v$version",
     "version_scheme": "semver",
     "version": "0.0.1",
-    "update_changelog_on_bump": true
+    "update_changelog_on_bump": true,
+    "changelog_start_rev": "v0.0.0",
+    "customize": {
+      "message_template": "{{change_type}}{% if scope %}({{scope}}){% endif %}: {{message}}",
+      "schema": "<type>(<scope>): <body>",
+      "commit_parser": "^(?P<change_type>chore|fix|feat|docs|style|refactor)\\(?(?P<scope>[a-z\\-0-9]+)?\\)?: (?P<message>.*)?",
+      "changelog_pattern": "^(chore|fix|feat|docs|style|refactor)?(!)?",
+      "change_type_map": {
+        "chore": "Chore",
+        "fix": "Fix",
+        "feat": "Feature",
+        "docs": "Documentation",
+        "style": "Style",
+        "refactor": "Refactor"
+      },
+      "change_type_order": [
+        "Feature",
+        "Fix",
+        "Refactor",
+        "Chore"
+      ],
+      "questions": [
+        {
+          "type": "list",
+          "name": "change_type",
+          "choices": [
+            {
+              "value": "chore",
+              "name": "chore: A caught all."
+            },
+            {
+              "value": "fix",
+              "name": "fix: bug fix."
+            },
+            {
+              "value": "feat",
+              "name": "feat: A new feature."
+            },
+            {
+              "value": "docs",
+              "name": "docs: Documentation only changes."
+            },
+            {
+              "value": "style",
+              "name": "style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)"
+            },
+            {
+              "value": "refactor",
+              "name": "refactor: A code change that neither fixes a bug nor adds a feature"
+            },
+            {
+              "value": "build",
+              "name": "build: Changes that affect the build system or external dependencies"
+            },
+            {
+              "value": "ci",
+              "name": "ci: Changes to CI configuration files and scripts"
+            }
+          ],
+          "message": "Select the type of change you are committing"
+        },
+        {
+          "type": "input",
+          "name": "scope",
+          "message": "What is the scope of this change? (class or file name):\n"
+        },
+        {
+          "type": "input",
+          "name": "message",
+          "message": "Write a short and imperative summary of the code changes: (lower case and no period):\n"
+        }
+      ]
+    }
   }
 }
