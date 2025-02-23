@@ -1,6 +1,7 @@
 {
   inputs = {
     # keep-sorted start block=yes case=no
+    ascii-pkgs.url = "github:a1994sc/nix-pkgs";
     flake-utils = {
       inputs.systems.follows = "systems";
       url = "github:numtide/flake-utils";
@@ -16,6 +17,15 @@
       url = "github:numtide/treefmt-nix";
     };
     # keep-sorted end
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://a1994sc.cachix.org"
+    ];
+    trusted-public-keys = [
+      "a1994sc.cachix.org-1:xZdr1tcv+XGctmkGsYw3nXjO1LOpluCv4RDWTqJRczI="
+    ];
   };
 
   outputs =
@@ -82,24 +92,6 @@
         envShell = builtins.concatStringsSep "\n" (
           pkgs.lib.attrsets.mapAttrsToList (k: v: "export ${k}=${v}") env
         );
-        mkZarfPackage =
-          {
-            path,
-            pname,
-            version,
-            ...
-          }:
-          pkgs.stdenv.mkDerivation {
-            inherit version pname;
-            src = ./.;
-            shellHook = envShell;
-            buildInputs = [
-              pkgs.zarf
-            ];
-            buildPhase = ''
-              zarf package create ${path} --no-color --no-log-file --confirm
-            '';
-          };
         shellHook =
           self.checks.${system}.pre-commit-check.shellHook
           + ''
@@ -111,9 +103,13 @@
             git
             gh
             renovate
-            (writeShellScriptBin "package" ''
-              zarf package create -o $(${git}/bin/git rev-parse --show-toplevel) $@
+            (writeShellScriptBin "zpkg" ''
+              ${
+                inputs.ascii-pkgs.packages.${system}.zarf
+              }/bin/zarf package create -o $(${git}/bin/git rev-parse --show-toplevel) $@
             '')
+            inputs.ascii-pkgs.packages.${system}.fluxcd-2-5
+            inputs.ascii-pkgs.packages.${system}.zarf
           ]
           ++ self.checks.${system}.pre-commit-check.enabledPackages;
       in
@@ -138,11 +134,6 @@
         };
         devShells.default = pkgs.mkShell { inherit shellHook buildInputs; };
         formatter = treefmtEval.config.build.wrapper;
-        packages.zarf-istio = mkZarfPackage {
-          path = ./core/istio;
-          pname = "istio-ambient";
-          version = "1.24.2";
-        };
       }
     );
 }
