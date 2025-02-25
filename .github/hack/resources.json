@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/a1994sc/gitops-v2/refs/heads/main/.github/hack/resources.schema.json",
+  "$schema": "https://raw.githubusercontent.com/a1994sc/gitops-v2/main/.github/hack/resources.schema.json",
   "projects": [
     {
       "path": "apps/gateway",
@@ -32,7 +32,7 @@
       "repo": {
         "url": "https://github.com/gimlet-io/capacitor",
         "renovate": "datasource=github-releases depName=gimlet-io/capacitor",
-        "tag": "v2.4.0",
+        "tag": "capacitor-v0.4.8",
         "path": "deploy/k8s",
         "release": false
       }
