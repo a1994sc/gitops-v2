@@ -39,7 +39,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Apply Updatecli
-        run: "updatecli apply --clean --config ./.github/updatecli/config.d/ --values ./.github/updatecli/values.yaml"
+        run: "updatecli apply --clean --config ./.github/updatecli/config.d/ --values ./.github/updatecli/values.yml"
         env:
           UPDATECLI_GITHUB_ACTOR: ${{ github.actor }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
