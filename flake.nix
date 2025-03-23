@@ -110,6 +110,7 @@
             '')
             inputs.ascii-pkgs.packages.${system}.fluxcd-2-5
             inputs.ascii-pkgs.packages.${system}.zarf
+            updatecli
           ]
           ++ self.checks.${system}.pre-commit-check.enabledPackages;
       in
