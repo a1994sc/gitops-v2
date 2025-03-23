@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://www.updatecli.io/schema/latest/config.json
-name: Autodiscovery
+name: Autodiscovery - Helm
 
 scms:
   gitops:
@@ -16,10 +16,6 @@ autodiscovery:
   actionid: github
   groupby: individual
   crawlers:
-    kubernetes:
-      digest: false
-    flux:
-      digest: false
     helm:
       digest: false
 
