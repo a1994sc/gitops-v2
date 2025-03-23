@@ -20,3 +20,13 @@ autodiscovery:
       digest: false
     helm:
       digest: false
+
+actions:
+  github:
+    kind: "github/pullrequest"
+    scmid: "gitops"
+    spec:
+      automerge: false
+      draft: false
+      mergemethod: squash
+      parent: false
