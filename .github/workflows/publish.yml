@@ -22,23 +22,32 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       # Tool install
-      - uses: sigstore/cosign-installer@d7d6bc7722e3daa8354c50bcb52f4837da5e9b6a # v3.8.1
-      - uses: fluxcd/flux2/action@8d5f40dca5aa5d3c0fc3414457dda15a0ac92fa4 # v2.5.1
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@d7d6bc7722e3daa8354c50bcb52f4837da5e9b6a # v3.8.1
+
+      - name: Install fluxcd
+        uses: fluxcd/flux2/action@8d5f40dca5aa5d3c0fc3414457dda15a0ac92fa4 # v2.5.1
+
       # Git logic
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
+
       - if: github.ref_type == 'tag'
         shell: bash
         run: |
           echo "REV=${{ github.ref_name }}" >> "$GITHUB_ENV"
           echo "HASH=" >> "$GITHUB_ENV"
+
       - if: github.ref_type != 'tag'
         shell: bash
         run: |
           echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_ENV"
           echo "HASH=$(git describe --first-parent | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_ENV"
+
       # Publish OCI artifacts
       - name: Publish Flux OCI artifact to GHCR
         run: |
@@ -49,6 +58,7 @@ jobs:
             --annotations='org.opencontainers.image.description=Gitops core for FluxCD' \
             --annotations='org.opencontainers.image.documentation=https://github.com/a1994sc/gitops-v2'
           flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} --tag latest
+
       - name: Sign artifacts with Cosign
         env:
           COSIGN_EXPERIMENTAL: 1

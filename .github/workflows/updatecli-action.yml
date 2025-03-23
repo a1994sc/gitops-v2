@@ -1,0 +1,45 @@
+---
+name: Updatecli
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  updatecli:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install Updatecli in the runner
+        uses: updatecli/updatecli-action@b0d4fd84ae72108930c9adb83bb4beba1acbaf9f # v2.79.0
+
+      - name: Delete leftover UpdateCLI branches
+        run: |
+          gh pr list \
+            --search "is:closed is:pr head:updatecli_" \
+            --json headRefName \
+            --jq ".[].headRefName" | sort -u > closed_prs_branches.txt
+          gh pr list \
+            --search "is:open is:pr head:updatecli_" \
+            --json headRefName \
+            --jq ".[].headRefName" | sort -u > open_prs_branches.txt
+          for branch in $(comm -23 closed_prs_branches.txt open_prs_branches.txt); do
+            if (git ls-remote --exit-code --heads origin "$branch"); then
+              echo "Deleting leftover UpdateCLI branch - $branch";
+              git push origin --delete "$branch";
+            fi
+          done
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Apply Updatecli
+        run: "updatecli apply --clean --config ./.github/updatecli/config.d/ --values ./.github/updatecli/values.yaml"
+        env:
+          UPDATECLI_GITHUB_ACTOR: ${{ github.actor }}
+          UPDATECLI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

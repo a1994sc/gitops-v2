@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://www.updatecli.io/schema/latest/config.json
+name: Autodiscovery
+
+scms:
+  gitops:
+    kind: github
+    spec:
+      owner: a1994sc
+      repository: gitops-v2
+      token: "{{ requiredEnv .github.token }}"
+      branch: main
+
+autodiscovery:
+  scmid: gitops
+  crawlers:
+    kubernetes:
+      digest: false
+    flux:
+      digest: false
+    helm:
+      digest: false

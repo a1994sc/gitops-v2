@@ -17,8 +17,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
+
       - name: Configure gitsign
-        uses: chainguard-dev/actions/setup-gitsign@main
+        uses: chainguard-dev/actions/setup-gitsign@19f50ca62fcb3e94c768f5fcffb4b14fcdc6c5ed # main
+
       - name: Update checksum
         env:
           GH_TOKEN: ${{ github.token }}
