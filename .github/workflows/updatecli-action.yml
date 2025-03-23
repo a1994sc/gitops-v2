@@ -3,6 +3,9 @@ name: Updatecli
 
 on:
   workflow_dispatch:
+  # run every hour
+  schedule:
+    - cron: '15 * * * *'
 
 permissions:
   contents: write

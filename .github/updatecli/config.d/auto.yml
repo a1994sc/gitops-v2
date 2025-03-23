@@ -13,6 +13,8 @@ scms:
 
 autodiscovery:
   scmid: gitops
+  actionid: github
+  groupby: individual
   crawlers:
     kubernetes:
       digest: false
@@ -24,7 +26,7 @@ autodiscovery:
 actions:
   github:
     kind: "github/pullrequest"
-    scmid: "gitops"
+    scmid: gitops
     spec:
       automerge: false
       draft: false
