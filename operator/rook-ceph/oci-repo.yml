@@ -10,4 +10,4 @@ spec:
     operation: copy
   url: oci://chartproxy.container-registry.com/charts.rook.io/release/rook-ceph
   ref:
-    tag: 1.16.5
+    tag: 1.16.6
