@@ -10,4 +10,4 @@ spec:
     operation: copy
   url: oci://gcr.io/istio-release/charts/cni
   ref:
-    tag: 1.25.1
+    tag: 1.25.2
