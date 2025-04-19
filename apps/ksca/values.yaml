@@ -1,17 +1,34 @@
 ---
+fullnameOverride: kubelet-csr-approver
 tolerations:
   - key: CriticalOnly
     operator: "Exists"
   - key: InfrastructureOnly
     operator: Exists
-replica: 2
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+    operator: Equal
+loggingLevel: 0
+leaderElection: true
+replicas: 2
 image:
-  # renovate: datasource=docker depName=ghcr.io/alex1989hu/kubelet-serving-cert-approver
-  tag: "0.8.7"
+  repository: ghcr.io/postfinance/kubelet-csr-approver
+rbac:
+  manage: true
 metrics:
-  enabled: true
+  enable: true
+  serviceType: ClusterIP
+  port: 8080
+  annotations: {}
+  serviceMonitor:
+    enabled: false
+    additionalLabels: {}
+    interval: 1m
+    scrapeTimeout: 10s
+    metricRelabelings: []
+    relabelings: []
 serviceAccount:
-  automount: false
+  create: true
 resources:
   limits:
     cpu: null
@@ -19,27 +36,39 @@ resources:
   requests:
     cpu: 10m
     memory: 18Mi
-extraVolumes:
-  volumes:
-    - name: serviceaccount-token
-      projected:
-        defaultMode: 0444
-        sources:
-          - serviceAccountToken:
-              expirationSeconds: 3607
-              path: token
-          - configMap:
-              name: kube-root-ca.crt
-              items:
-                - key: ca.crt
-                  path: ca.crt
-          - downwardAPI:
-              items:
-                - path: namespace
-                  fieldRef:
-                    apiVersion: v1
-                    fieldPath: metadata.namespace
-  volumeMounts:
-    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: serviceaccount-token
-      readOnly: true
+securityContext:
+  runAsUser: 65532
+  runAsGroup: 65532
+  runAsNonRoot: true
+  privileged: false
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+    drop:
+      - "all"
+dnsPolicy: ""
+dnsConfig: {}
+podAnnotations: {}
+podLabels: {}
+# PriorityClass indicates the importance of a Pod relative to other Pods.
+priorityClassName: ""
+podSecurityContext: {}
+providerRegex: ""
+# optional, specified as a string (enclosed with ""). if left empty, defaults to 367 days
+maxExpirationSeconds: ""
+# optional, permits to bypass dns resolution checks. default: false
+bypassDnsResolution: false
+# number of DNS SAN names allowed in a certificate request. defaults to 1
+allowedDnsNames: 1
+# optional, permits ignoring CSRs with another Username than `system:node:...`
+ignoreNonSystemNode: false
+# optional, prevents csr denial, i.e. only lets kubelet-csr-approver approve valid CSRs but ignore other CSRs
+skipDenyStep: false
+# set this parameter to true to ignore mismatching DNS name and hostname
+bypassHostnameCheck: false
+# optional, list of IP (IPv4, IPv6) subnets that are allowed to submit CSRs
+providerIpPrefixes: []
+#   - 192.168.8.0/22
+#   - fc00::/7
