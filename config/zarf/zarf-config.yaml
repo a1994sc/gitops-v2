@@ -1,0 +1,8 @@
+---
+package:
+  create:
+    skip_sbom: false
+    set:
+      agent_image_domain: ghcr.io/
+      agent_image: zarf-dev/zarf/agent
+      agent_image_tag: v0.45.0

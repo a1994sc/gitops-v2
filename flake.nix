@@ -95,7 +95,7 @@
         shellHook =
           self.checks.${system}.pre-commit-check.shellHook
           + ''
-            export ZARF_CONFIG=$(git rev-parse --show-toplevel)/config/zarf-config.yaml
+            export ZARF_CONFIG=$(git rev-parse --show-toplevel)/config/zarf/zarf-config.yaml
           '';
         buildInputs =
           with pkgs;
