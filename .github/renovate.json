@@ -9,18 +9,18 @@
   ],
   "dependencyDashboard": true,
   "flux": {
-    "fileMatch": [
-      "(^|/).+\\.ya?ml(\\.j2)?$"
+    "managerFilePatterns": [
+      "/(^|/).+\\.ya?ml(\\.j2)?$/"
     ]
   },
   "helm-values": {
-    "fileMatch": [
-      "(^|/).+\\.ya?ml(\\.j2)?$"
+    "managerFilePatterns": [
+      "/(^|/).+\\.ya?ml(\\.j2)?$/"
     ]
   },
   "kubernetes": {
-    "fileMatch": [
-      "(^|/).+\\.ya?ml(\\.j2)?$"
+    "managerFilePatterns": [
+      "/(^|/).+\\.ya?ml(\\.j2)?$/"
     ]
   },
   "packageRules": [
@@ -86,8 +86,8 @@
       "description": [
         "Regex for resource.json hack"
       ],
-      "fileMatch": [
-        "(^|/).github/hack/resources\\.json"
+      "managerFilePatterns": [
+        "/(^|/).github/hack/resources\\.json/"
       ],
       "matchStrings": [
         "\"renovate\": \"datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\",\\n.+?: ?.*\"(?<currentValue>\\S+?)\""
@@ -99,8 +99,8 @@
       "description": [
         "Process custom dependencies"
       ],
-      "fileMatch": [
-        "(^|/).+\\.ya?ml(\\.j2)?$"
+      "managerFilePatterns": [
+        "/(^|/).+\\.ya?ml(\\.j2)?$/"
       ],
       "matchStrings": [
         "(?m:['\"]?v?(?<currentValue>[0-9][0-9a-zA-Z]*([\\.\\-][0-9a-zA-Z\\-]*)*)['\"]? # renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?)",
