@@ -28,9 +28,6 @@
       "description": [
         "this group is managed by my hack script, so we will disable them"
       ],
-      "matchDatasources": [
-        "kubernetes"
-      ],
       "matchPackageNames": [
         "fluxcd/helm-controller",
         "fluxcd/image-automation-controller",
