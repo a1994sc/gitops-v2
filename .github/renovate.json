@@ -26,6 +26,23 @@
   "packageRules": [
     {
       "description": [
+        "this group is managed by my hack script, so we will disable them"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "/fluxcd/helm-controller",
+        "/fluxcd/image-automation-controller",
+        "/fluxcd/image-reflector-controller",
+        "/fluxcd/notification-controller",
+        "/fluxcd/kustomize-controller",
+        "/fluxcd/source-controller"
+      ],
+      "enabled": false
+    },
+    {
+      "description": [
         "Flux Group"
       ],
       "groupName": "Flux",
