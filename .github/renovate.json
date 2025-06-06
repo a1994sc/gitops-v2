@@ -23,6 +23,9 @@
       "/(^|/).+\\.ya?ml(\\.j2)?$/"
     ]
   },
+  "github-actions": {
+    "enabled": false
+  },
   "packageRules": [
     {
       "description": [
