@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure gitsign
-        uses: chainguard-dev/actions/setup-gitsign@939ece6bc39459fd24dde56e63ca93adf840031e # v1.2.1
+        uses: chainguard-dev/actions/setup-gitsign@42c3aae0357e6493d93319b80c78fabada336849 # v1.4.1
 
       - name: Update checksum
         env:
