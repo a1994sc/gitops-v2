@@ -37,7 +37,8 @@
         "fluxcd/image-reflector-controller",
         "fluxcd/notification-controller",
         "fluxcd/kustomize-controller",
-        "fluxcd/source-controller"
+        "fluxcd/source-controller",
+        "fluxcd/source-watcher"
       ],
       "enabled": false
     },
