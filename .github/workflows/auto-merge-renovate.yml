@@ -9,6 +9,9 @@ on:
   workflow_run:
     workflows:
       - Populate Renovate resources
+  push:
+    branches:
+      - "renovate/**"
 
 permissions:
   pull-requests: write
