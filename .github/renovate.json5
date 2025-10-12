@@ -1,0 +1,121 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests"
+  ],
+  dependencyDashboard: true,
+  automerge: true,
+  automergeStrategy: "merge-commit",
+  platformAutomerge: true,
+  assignees: [
+    "@A1994SC"
+  ],
+  flux: {
+    managerFilePatterns: [
+      "/(^|/).+\\.ya?ml(\\.j2)?$/"
+    ]
+  },
+  "helm-values": {
+    managerFilePatterns: [
+      "/(^|/).+\\.ya?ml(\\.j2)?$/"
+    ]
+  },
+  kubernetes: {
+    managerFilePatterns: [
+      "/(^|/).+\\.ya?ml(\\.j2)?$/"
+    ]
+  },
+  "github-actions": {
+    enabled: false
+  },
+  packageRules: [
+    {
+      description: [
+        "this group is managed by my hack script, so we will disable them"
+      ],
+      matchPackageNames: [
+        "/fluxcd/.+/",
+      ],
+      enabled: false
+    },
+    {
+      description: [
+        "Flux Group"
+      ],
+      groupName: "Flux",
+      matchDatasources: [
+        "docker",
+        "github-tags",
+        "github-releases"
+      ],
+      versioning: "semver",
+      group: {
+        commitMessageTopic: "{{{groupName}}} group"
+      },
+      separateMinorPatch: true,
+      matchPackageNames: [
+        "/flux/"
+      ]
+    },
+    {
+      matchDatasources: [
+        "docker",
+        "helm"
+      ],
+      matchUpdateTypes: [
+        "major",
+        "minor",
+        "patch",
+        "bump"
+      ],
+      commitMessagePrefix: "chore(oci-deps): "
+    },
+    {
+      description: [
+        "Istio"
+      ],
+      groupName: "Istio",
+      matchDatasources: [
+        "docker",
+        "helm",
+        "regex"
+      ],
+      separateMajorMinor: false,
+      matchPackageNames: [
+        "!/^gcr.io\/istio-release\/charts\/.+/",
+        "!/^docker.io\/istio\/.+/",
+      ]
+    }
+  ],
+  customManagers: [
+    {
+      customType: "regex",
+      description: [
+        "Regex for resource.json hack"
+      ],
+      managerFilePatterns: [
+        "/(^|/).github/hack/resources\\.json/"
+      ],
+      matchStrings: [
+        "\"renovate\": \"datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\",\\n.+?: ?.*\"(?<currentValue>\\S+?)\""
+      ],
+      datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    },
+    {
+      customType: "regex",
+      description: [
+        "Process custom dependencies"
+      ],
+      managerFilePatterns: [
+        "/(^|/).+\\.ya?ml(\\.j2)?$/"
+      ],
+      matchStrings: [
+        "(?m:['\"]?v?(?<currentValue>[0-9][0-9a-zA-Z]*([\\.\\-][0-9a-zA-Z\\-]*)*)['\"]? # renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?)",
+        "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+?: ?\"?.*(?<currentValue>\\S+?)\"?$)",
+        "(?m:# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n.+?/(?<currentValue>(v|\\d)[^/]+)\\S+$)"
+      ],
+      datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    }
+  ]
+}
