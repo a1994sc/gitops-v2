@@ -1,0 +1,27 @@
+---
+name: Auto-approve_Renovate
+
+on:
+  pull_request_target:
+    branches:
+      - main
+  workflow_call:
+  workflow_run:
+    workflows:
+      - Populate Renovate resources
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  renovate:
+    name: renovate
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'renovate[bot]' }}
+    steps:
+      - name: Approve a PR
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ github.token }}
