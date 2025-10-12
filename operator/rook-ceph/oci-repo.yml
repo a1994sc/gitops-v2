@@ -10,4 +10,4 @@ spec:
     operation: copy
   url: oci://ghcr.io/rook/rook-ceph
   ref:
-    tag: v1.18.4
+    tag: v1.18.3
