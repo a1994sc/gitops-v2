@@ -1416,7 +1416,7 @@ spec:
             resourceFieldRef:
               containerName: manager
               resource: limits.memory
-        image: fluxcd/kustomize-controller:v1.7.1
+        image: fluxcd/kustomize-controller:v1.7.0
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
