@@ -37,6 +37,9 @@
       matchPackageNames: [
         "/fluxcd/.+/",
       ],
+      matchDatasources: [
+        "docker",
+      ],
       enabled: false
     },
     {
