@@ -23,6 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'renovate[bot]' }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+
       - uses: 8BitJonny/gh-get-current-pr@4056877062a1f3b624d5d4c2bedefa9cf51435c9 # v4.0.0
         id: PR
 
