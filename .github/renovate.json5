@@ -86,8 +86,8 @@
       ],
       separateMajorMinor: false,
       matchPackageNames: [
-        "!/^gcr.io\/istio-release\/charts\/.+/",
-        "!/^docker.io\/istio\/.+/",
+        "/^gcr.io\/istio-release\/charts\/.+/",
+        "/^docker.io\/istio\/.+/",
       ]
     }
   ],
