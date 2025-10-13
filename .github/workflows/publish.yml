@@ -38,31 +38,46 @@ jobs:
         with:
           fetch-depth: 0
 
-      - if: github.ref_type == 'tag'
-        shell: bash
-        run: |
-          echo "REV=${{ github.ref_name }}" >> "$GITHUB_ENV"
-          echo "HASH=" >> "$GITHUB_ENV"
+      - name: Get Git Tag Info
+        id: git-tag
+        run: |-
+          if ${{ startsWith(github.ref, 'refs/tags/') }}; then
+            echo "tag=$(echo ${{ github.ref }})"
+            echo "tag=$(echo ${{ github.ref }})" >> $GITHUB_OUTPUT
+          else
+            echo "tag=''"
+            echo "tag=''" >> $GITHUB_OUTPUT
+          fi
 
-      - if: github.ref_type != 'tag'
+      - name: determine build info
+        id: git
         shell: bash
-        run: |
-          echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_ENV"
-          echo "HASH=$(git describe --first-parent | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_ENV"
+        run: |-
+          if [[ "${{ steps.git-tag.outputs.TAG }}" != "''" ]]; then
+            echo "REV=${{ github.ref_name }}"
+            echo "REV=${{ github.ref_name }}" >> "$GITHUB_ENV"
+            echo "HASH="
+            echo "HASH=" >> "$GITHUB_ENV"
+          else
+            echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')"
+            echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_ENV"
+            echo "HASH=$(git describe --first-parent | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')"
+            echo "HASH=$(git describe --first-parent | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_ENV"
+          fi
 
       # Publish OCI artifacts
       - name: Publish Flux OCI artifact to GHCR
         run: |
-          flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} \
+          flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ steps.git.outputs.REV }}${{ steps.git.outputs.HASH }} \
             --path="./." \
             --source="${{ github.event.repository.html_url }}" \
             --revision="${GITHUB_REF_NAME}/${GITHUB_SHA}" \
             --annotations='org.opencontainers.image.description=Gitops core for FluxCD' \
             --annotations='org.opencontainers.image.documentation=https://github.com/a1994sc/gitops-v2'
-          flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} --tag latest
+          flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ steps.git.outputs.REV }}${{ steps.git.outputs.HASH }} --tag latest
 
       - name: Sign artifacts with Cosign
         env:
           COSIGN_EXPERIMENTAL: 1
         run: |-
-          cosign sign ghcr.io/a1994sc/gitops/core:${{ env.REV }}${{ env.HASH }} --yes
+          cosign sign ghcr.io/a1994sc/gitops/core:${{ steps.git.outputs.REV }}${{ steps.git.outputs.HASH }} --yes
