@@ -23,8 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'renovate[bot]' }}
     steps:
+      - uses: 8BitJonny/gh-get-current-pr@4056877062a1f3b624d5d4c2bedefa9cf51435c9 # v4.0.0
+        id: PR
+
       - name: Approve a PR
-        run: gh pr review --approve "$PR_URL"
+        run: gh pr review --approve ${{ steps.PR.outputs.number }}
+        if: ${{ github.event.pull_request.html_url != '' }}
         env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
           GITHUB_TOKEN: ${{ github.token }}
