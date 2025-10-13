@@ -3,7 +3,7 @@
 kind: ZarfPackageConfig
 metadata:
   name: istio-ambient
-  version: 1.27.1 # renovate: datasource=docker depName=gcr.io/istio-release/charts/base
+  version: 1.27.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/base
 components:
   - name: namespace
     required: true
@@ -18,7 +18,7 @@ components:
       - name: base
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/base
-        version: 1.27.1 # renovate: datasource=docker depName=gcr.io/istio-release/charts/base
+        version: 1.27.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/base
         valuesFiles:
           - base/values.yaml
     images:
@@ -30,7 +30,7 @@ components:
       - name: cni
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/cni
-        version: 1.27.1 # renovate: datasource=docker depName=gcr.io/istio-release/charts/cni
+        version: 1.27.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/cni
         valuesFiles:
           - cni/values.yaml
     images:
@@ -41,7 +41,7 @@ components:
       - name: istiod
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/istiod
-        version: 1.27.1 # renovate: datasource=docker depName=gcr.io/istio-release/charts/istiod
+        version: 1.27.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/istiod
         valuesFiles:
           - istiod/values.yaml
     images:
@@ -52,7 +52,7 @@ components:
       - name: gateway
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/gateway
-        version: 1.27.1 # renovate: datasource=docker depName=gcr.io/istio-release/charts/gateway
+        version: 1.27.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/gateway
         valuesFiles:
           - gateway/values.yaml
     images:
@@ -63,7 +63,7 @@ components:
       - name: ztunnel
         namespace: istio-system
         url: oci://gcr.io/istio-release/charts/ztunnel
-        version: 1.27.1 # renovate: datasource=docker depName=gcr.io/istio-release/charts/ztunnel
+        version: 1.27.2 # renovate: datasource=docker depName=gcr.io/istio-release/charts/ztunnel
         valuesFiles:
           - ztunnel/values.yaml
     images:
