@@ -8,7 +8,10 @@ on:
   workflow_call:
   workflow_run:
     workflows:
+      # work-flow name
       - Populate Renovate resources
+      # job name
+      - Update Resources
   push:
     branches:
       - "renovate/**"
