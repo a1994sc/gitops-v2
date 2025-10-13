@@ -23,7 +23,7 @@ components:
           - base/values.yaml
     images:
       # Needed for the gateway pods
-      - docker.io/istio/proxyv2:1.27.1-distroless # renovate: datasource=docker depName=docker.io/istio/proxyv2
+      - docker.io/istio/proxyv2:1.27.2-distroless # renovate: datasource=docker depName=docker.io/istio/proxyv2
   - name: cni
     required: true
     charts:
