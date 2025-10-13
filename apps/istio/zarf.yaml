@@ -34,7 +34,7 @@ components:
         valuesFiles:
           - cni/values.yaml
     images:
-      - docker.io/istio/install-cni:1.27.1-distroless # renovate: datasource=docker depName=docker.io/istio/install-cni
+      - docker.io/istio/install-cni:1.27.2-distroless # renovate: datasource=docker depName=docker.io/istio/install-cni
   - name: istiod
     required: true
     charts:
