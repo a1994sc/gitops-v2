@@ -45,7 +45,7 @@ components:
         valuesFiles:
           - istiod/values.yaml
     images:
-      - docker.io/istio/pilot:1.27.1-distroless # renovate: datasource=docker depName=docker.io/istio/pilot
+      - docker.io/istio/pilot:1.27.2-distroless # renovate: datasource=docker depName=docker.io/istio/pilot
   - name: istio-gateway
     required: true
     charts:
@@ -56,7 +56,7 @@ components:
         valuesFiles:
           - gateway/values.yaml
     images:
-      - docker.io/istio/pilot:1.27.1-distroless # renovate: datasource=docker depName=docker.io/istio/pilot
+      - docker.io/istio/pilot:1.27.2-distroless # renovate: datasource=docker depName=docker.io/istio/pilot
   - name: ztunnel
     required: true
     charts:
