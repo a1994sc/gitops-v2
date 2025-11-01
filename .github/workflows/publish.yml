@@ -38,32 +38,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get Git Tag Info
-        id: git-tag
-        run: |-
-          if ${{ startsWith(github.ref, 'refs/tags/') }}; then
-            echo "tag=$(echo ${{ github.ref }})"
-            echo "tag=$(echo ${{ github.ref }})" >> $GITHUB_OUTPUT
-          else
-            echo "tag=''"
-            echo "tag=''" >> $GITHUB_OUTPUT
-          fi
-
       - name: determine build info
         id: git
         shell: bash
         run: |-
-          if [[ "${{ steps.git-tag.outputs.TAG }}" != "''" ]]; then
-            echo "REV=${{ github.ref_name }}"
-            echo "REV=${{ github.ref_name }}" >> "$GITHUB_ENV"
-            echo "HASH="
-            echo "HASH=" >> "$GITHUB_ENV"
-          else
-            echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')"
-            echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_ENV"
-            echo "HASH=$(git describe --first-parent | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')"
-            echo "HASH=$(git describe --first-parent | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_ENV"
-          fi
+          echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')"
+          echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_ENV"
+          echo "HASH=$(cat ${{ github.sha }} | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')"
+          echo "HASH=$(cat ${{ github.sha }} | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_ENV"
 
       # Publish OCI artifacts
       - name: Publish Flux OCI artifact to GHCR
