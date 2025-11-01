@@ -41,26 +41,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: determine build info
-        id: git
-        shell: bash
-        run: |-
-          echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')"
-          echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_OUTPUT"
-
       # Publish OCI artifacts
       - name: Publish Flux OCI artifact to GHCR
         run: |
-          flux push artifact oci://ghcr.io/a1994sc/gitops/core:$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')-$(git rev-parse --short HEAD) \
+          flux push artifact oci://ghcr.io/a1994sc/gitops/core:$(git describe --first-parent --always --tags) \
             --path="./." \
             --source="${{ github.event.repository.html_url }}" \
             --revision="${GITHUB_REF_NAME}/${GITHUB_SHA}" \
             --annotations='org.opencontainers.image.description=Gitops core for FluxCD' \
             --annotations='org.opencontainers.image.documentation=https://github.com/a1994sc/gitops-v2'
-          flux tag artifact oci://ghcr.io/a1994sc/gitops/core:$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')-$(git rev-parse --short HEAD) --tag latest
+          flux tag artifact oci://ghcr.io/a1994sc/gitops/core:$(git describe --first-parent --always --tags) --tag latest
 
       - name: Sign artifacts with Cosign
         env:
           COSIGN_EXPERIMENTAL: 1
         run: |-
-          cosign sign ghcr.io/a1994sc/gitops/core:$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')-$(git rev-parse --short HEAD) --yes
+          cosign sign ghcr.io/a1994sc/gitops/core:$(git describe --first-parent --always --tags) --yes
