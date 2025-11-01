@@ -29,6 +29,8 @@ jobs:
       # Tool install
       - name: Install Cosign
         uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
+        with:
+          cosign-release: v2.6.1 # cosign v3+ will be supported only in Flux v2.8+
 
       - name: Install fluxcd
         uses: fluxcd/flux2/action@b6e76ca2534f76dcb8dd94fb057cdfa923c3b641 # v2.7.3
@@ -45,22 +47,20 @@ jobs:
         run: |-
           echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')"
           echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_OUTPUT"
-          echo "HASH=$(echo ${{ github.sha }} | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')"
-          echo "HASH=$(echo ${{ github.sha }} | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_OUTPUT"
 
       # Publish OCI artifacts
       - name: Publish Flux OCI artifact to GHCR
         run: |
-          flux push artifact oci://ghcr.io/a1994sc/gitops/core:${{ steps.git.outputs.REV }}${{ steps.git.outputs.HASH }} \
+          flux push artifact oci://ghcr.io/a1994sc/gitops/core:$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')-$(git rev-parse --short HEAD) \
             --path="./." \
             --source="${{ github.event.repository.html_url }}" \
             --revision="${GITHUB_REF_NAME}/${GITHUB_SHA}" \
             --annotations='org.opencontainers.image.description=Gitops core for FluxCD' \
             --annotations='org.opencontainers.image.documentation=https://github.com/a1994sc/gitops-v2'
-          flux tag artifact oci://ghcr.io/a1994sc/gitops/core:${{ steps.git.outputs.REV }}${{ steps.git.outputs.HASH }} --tag latest
+          flux tag artifact oci://ghcr.io/a1994sc/gitops/core:$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')-$(git rev-parse --short HEAD) --tag latest
 
       - name: Sign artifacts with Cosign
         env:
           COSIGN_EXPERIMENTAL: 1
         run: |-
-          cosign sign ghcr.io/a1994sc/gitops/core:${{ steps.git.outputs.REV }}${{ steps.git.outputs.HASH }} --yes
+          cosign sign ghcr.io/a1994sc/gitops/core:$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')-$(git rev-parse --short HEAD) --yes
