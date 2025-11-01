@@ -44,8 +44,8 @@ jobs:
         run: |-
           echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')"
           echo "REV=$(git describe --first-parent | awk -F. -v OFS=. '{$3++}1')" >> "$GITHUB_ENV"
-          echo "HASH=$(cat ${{ github.sha }} | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')"
-          echo "HASH=$(cat ${{ github.sha }} | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_ENV"
+          echo "HASH=$(echo ${{ github.sha }} | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')"
+          echo "HASH=$(echo ${{ github.sha }} | sed -E 's/^v([0-9]+\.){2}[0-9]+//g')" >> "$GITHUB_ENV"
 
       # Publish OCI artifacts
       - name: Publish Flux OCI artifact to GHCR
