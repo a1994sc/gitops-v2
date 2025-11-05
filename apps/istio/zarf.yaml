@@ -67,4 +67,4 @@ components:
         valuesFiles:
           - ztunnel/values.yaml
     images:
-      - docker.io/istio/ztunnel:1.27.3-distroless # renovate: datasource=docker depName=docker.io/istio/ztunnel
+      - docker.io/istio/ztunnel:1.28.0-distroless # renovate: datasource=docker depName=docker.io/istio/ztunnel
