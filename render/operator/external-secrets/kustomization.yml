@@ -1,0 +1,47 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  kube.adrp.xyz/rendered: "true"
+resources:
+  - crds/acraccesstokens.generators.external-secrets.io.yml
+  - crds/cloudsmithaccesstokens.generators.external-secrets.io.yml
+  - crds/clusterexternalsecrets.external-secrets.io.yml
+  - crds/clustergenerators.generators.external-secrets.io.yml
+  - crds/clusterpushsecrets.external-secrets.io.yml
+  - crds/clustersecretstores.external-secrets.io.yml
+  - crds/ecrauthorizationtokens.generators.external-secrets.io.yml
+  - crds/externalsecrets.external-secrets.io.yml
+  - crds/fakes.generators.external-secrets.io.yml
+  - crds/gcraccesstokens.generators.external-secrets.io.yml
+  - crds/generatorstates.generators.external-secrets.io.yml
+  - crds/githubaccesstokens.generators.external-secrets.io.yml
+  - crds/grafanas.generators.external-secrets.io.yml
+  - crds/mfas.generators.external-secrets.io.yml
+  - crds/passwords.generators.external-secrets.io.yml
+  - crds/pushsecrets.external-secrets.io.yml
+  - crds/quayaccesstokens.generators.external-secrets.io.yml
+  - crds/secretstores.external-secrets.io.yml
+  - crds/sshkeys.generators.external-secrets.io.yml
+  - crds/stssessiontokens.generators.external-secrets.io.yml
+  - crds/uuids.generators.external-secrets.io.yml
+  - crds/vaultdynamicsecrets.generators.external-secrets.io.yml
+  - crds/webhooks.generators.external-secrets.io.yml
+  - manifests/sa_external-secrets-cert-controller.yml
+  - manifests/sa_external-secrets-webhook.yml
+  - manifests/sa_release-name-external-secrets.yml
+  - manifests/r_release-name-external-secrets-leaderelection.yml
+  - manifests/cr_release-name-external-secrets-cert-controller.yml
+  - manifests/cr_release-name-external-secrets-controller.yml
+  - manifests/cr_release-name-external-secrets-edit.yml
+  - manifests/cr_release-name-external-secrets-servicebindings.yml
+  - manifests/cr_release-name-external-secrets-view.yml
+  - manifests/rb_release-name-external-secrets-leaderelection.yml
+  - manifests/crb_release-name-external-secrets-cert-controller.yml
+  - manifests/crb_release-name-external-secrets-controller.yml
+  - manifests/s_release-name-external-secrets-webhook.yml
+  - manifests/d_release-name-external-secrets.yml
+  - manifests/d_release-name-external-secrets-cert-controller.yml
+  - manifests/d_release-name-external-secrets-webhook.yml
+  - manifests/vwc_externalsecret-validate.yml
+  - manifests/vwc_secretstore-validate.yml
