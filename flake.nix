@@ -1,7 +1,6 @@
 {
   inputs = {
     # keep-sorted start block=yes case=no
-    ascii-pkgs.url = "github:a1994sc/nix-pkgs";
     flake-utils = {
       inputs.systems.follows = "systems";
       url = "github:numtide/flake-utils";
@@ -17,15 +16,6 @@
       url = "github:numtide/treefmt-nix";
     };
     # keep-sorted end
-  };
-
-  nixConfig = {
-    extra-substituters = [
-      "https://a1994sc.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "a1994sc.cachix.org-1:xZdr1tcv+XGctmkGsYw3nXjO1LOpluCv4RDWTqJRczI="
-    ];
   };
 
   outputs =
@@ -86,31 +76,15 @@
             # keep-sorted end
           }
         );
-        env = {
-          ZARF_CONFIG = "$(${pkgs.git}/bin/git rev-parse --show-toplevel)/config/zarf-config.yaml";
-        };
-        envShell = builtins.concatStringsSep "\n" (
-          pkgs.lib.attrsets.mapAttrsToList (k: v: "export ${k}=${v}") env
-        );
-        shellHook =
-          self.checks.${system}.pre-commit-check.shellHook
-          + ''
-            export ZARF_CONFIG=$(git rev-parse --show-toplevel)/config/zarf/zarf-config.yaml
-          '';
+        shellHook = self.checks.${system}.pre-commit-check.shellHook;
         buildInputs =
           with pkgs;
           [
             git
             gh
-            renovate
-            (writeShellScriptBin "zpkg" ''
-              ${
-                inputs.ascii-pkgs.packages.${system}.zarf
-              }/bin/zarf package create -o $(${git}/bin/git rev-parse --show-toplevel) $@
-            '')
-            inputs.ascii-pkgs.packages.${system}.fluxcd-2-5
-            inputs.ascii-pkgs.packages.${system}.zarf
             updatecli
+            kubectl
+            kubernetes-helm
           ]
           ++ self.checks.${system}.pre-commit-check.enabledPackages;
       in

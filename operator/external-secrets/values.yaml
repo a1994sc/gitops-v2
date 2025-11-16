@@ -21,7 +21,7 @@ resources:
   requests:
     cpu: 10m
     memory: 64Mi
-  limit:
+  limits:
     cpu: 100m
     memory: 192Mi
 tolerations:
@@ -81,7 +81,7 @@ webhook:
     requests:
       cpu: 10m
       memory: 64Mi
-    limit:
+    limits:
       cpu: 100m
       memory: 192Mi
   tolerations:
@@ -141,7 +141,7 @@ certController:
     requests:
       cpu: 10m
       memory: 64Mi
-    limit:
+    limits:
       cpu: 100m
       memory: 192Mi
   tolerations:
