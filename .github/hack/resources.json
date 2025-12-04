@@ -6,7 +6,7 @@
       "repo": {
         "url": "https://github.com/kubernetes-sigs/gateway-api",
         "renovate": "datasource=github-releases depName=kubernetes-sigs/gateway-api",
-        "tag": "v1.4.0",
+        "tag": "v1.4.1",
         "path": "config/crd",
         "release": false
       }
