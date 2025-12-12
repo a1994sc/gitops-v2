@@ -32,7 +32,7 @@
       "repo": {
         "url": "https://github.com/gimlet-io/capacitor",
         "renovate": "datasource=github-releases depName=gimlet-io/capacitor",
-        "tag": "capacitor-v0.4.8",
+        "tag": "0.12.1",
         "path": "deploy/k8s",
         "release": false
       }
