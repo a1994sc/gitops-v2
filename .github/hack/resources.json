@@ -23,19 +23,6 @@
         "path": "manifests.tar.gz",
         "release": true
       }
-    },
-    {
-      "path": "apps/capacitor",
-      "file": {
-        "match": "*.yaml"
-      },
-      "repo": {
-        "url": "https://github.com/gimlet-io/capacitor",
-        "renovate": "datasource=github-releases depName=gimlet-io/capacitor",
-        "tag": "0.12.1",
-        "path": "deploy/k8s",
-        "release": false
-      }
     }
   ]
 }
