@@ -33,7 +33,7 @@ jobs:
           cosign-release: v2.6.1 # cosign v3+ will be supported only in Flux v2.8+
 
       - name: Install fluxcd
-        uses: fluxcd/flux2/action@6a650dba1b4ae9945185c4bb3cc3f386aaf71b3d # v2.9.2
+        uses: fluxcd/flux2/action@16602fa989daa99762f1c6d1186ae2ad1c735815 # v2.9.3
 
       # Git logic
       - name: Checkout
