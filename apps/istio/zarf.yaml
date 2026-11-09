@@ -23,7 +23,7 @@ components:
           - base/values.yaml
     images:
       # Needed for the gateway pods
-      - docker.io/istio/proxyv2:1.31.4-distroless # renovate: datasource=docker depName=docker.io/istio/proxyv2
+      - docker.io/istio/proxyv2:1.32.0-distroless # renovate: datasource=docker depName=docker.io/istio/proxyv2
   - name: cni
     required: true
     charts:
@@ -34,7 +34,7 @@ components:
         valuesFiles:
           - cni/values.yaml
     images:
-      - docker.io/istio/install-cni:1.31.4-distroless # renovate: datasource=docker depName=docker.io/istio/install-cni
+      - docker.io/istio/install-cni:1.32.0-distroless # renovate: datasource=docker depName=docker.io/istio/install-cni
   - name: istiod
     required: true
     charts:
@@ -67,4 +67,4 @@ components:
         valuesFiles:
           - ztunnel/values.yaml
     images:
-      - docker.io/istio/ztunnel:1.31.4-distroless # renovate: datasource=docker depName=docker.io/istio/ztunnel
+      - docker.io/istio/ztunnel:1.32.0-distroless # renovate: datasource=docker depName=docker.io/istio/ztunnel
